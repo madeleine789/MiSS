@@ -1,6 +1,6 @@
 package pl.edu.agh.miss.intruders.api;
 
-import java.util.Queue;
+import java.util.List;
 
 /** Graph edge between 2 DoorNodes.
  *
@@ -22,5 +22,5 @@ public interface DoorEdge {
      * describes how much of the intruder presence probability will
      * be moved through the node in the time step.
      */
-    Queue<Integer> getIntruderQueue();
+    List<Integer> getIntruderQueue();
 }
