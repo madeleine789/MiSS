@@ -1,11 +1,12 @@
 package pl.edu.agh.miss.intruders.api.intruder;
 
+import pl.edu.agh.miss.intruders.api.DoorEdge;
 import pl.edu.agh.miss.intruders.api.DoorNode;
 
 /**
  * Created by tgs on 3/21/16.
  */
-public interface DoorEdge extends pl.edu.agh.miss.intruders.api.DoorEdge {
+public interface IntruderControllerDoorEdge extends DoorEdge {
     DoorNode getSource();
     DoorNode getDestination();
     int getLength();

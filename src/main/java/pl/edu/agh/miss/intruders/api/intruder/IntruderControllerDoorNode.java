@@ -20,11 +20,11 @@ import java.util.List;
  *     weight-of-the-event / sum(all-weights-in-this-node)
  * At least one of the weights must be a positive number.
  */
-public interface DoorNode extends pl.edu.agh.miss.intruders.api.DoorNode {
+public interface IntruderControllerDoorNode extends DoorNode {
     /** Get an array of the other doors in the room */
-    List<DoorEdge> getEdges();
+    List<IntruderControllerDoorEdge> getEdges();
     /** Get the corresponding door object in the other room ("passing through") */
-    DoorNode getTheOtherSide();
+    IntruderControllerDoorNode getTheOtherSide();
 
     /** Get the probability of the intruder passing through the door. */
     int getPassThroughProbability();
