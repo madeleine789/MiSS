@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class Node {
+    public final static double DEFAULT_PROBABILITY = 0.01;
     private String nodeId;
     private List<Edge> incidentEdges = new ArrayList<>();
 

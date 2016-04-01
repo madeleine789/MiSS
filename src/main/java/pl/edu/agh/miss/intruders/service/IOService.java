@@ -21,17 +21,14 @@ public class IOService {
         JsonNode spacesNode = root.get("space-nodes");
         JsonNode edgesNode = root.get("node-nodes");
 
-        Map<String, String> tempGates = new HashMap<>();
-        List<Edge> tempEdges = new LinkedList<>();
-
         Map<String, Node> nodes = new HashMap<>();
         Map<String, String> gates = new HashMap<>();
         Map<String, Space> spaces = new HashMap<>();
-        List<Edge> edges;
+        List<Edge> edges = new ArrayList<>();
 
         gatesNode.forEach(gateNode -> {
             Gate gate = new Gate(gateNode.get("nodeId").asText(), gateNode.get("gateId").asText());
-            tempGates.put(gate.getNodeId(), gate.getGateId());
+            gates.put(gate.getNodeId(), gate.getGateId());
         });
 
         spacesNode.forEach(spaceNode -> {
@@ -53,52 +50,8 @@ public class IOService {
 
             nodes.get(edge.getNodeFromId()).getIncidentEdges().add(edge);
             nodes.get(edge.getNodeToId()).getIncidentEdges().add(edge);
-            tempEdges.add(edge);
+            edges.add(edge);
         });
-
-        tempEdges.forEach(e -> {
-            if (tempGates.get(e.getNodeFromId()) != null && tempGates.get(e.getNodeToId()) != null) {
-                Node from = nodes.get(e.getNodeFromId());
-                Node to = nodes.get(e.getNodeToId());
-                String newId = from.getNodeId() + to.getNodeId().substring(4);
-                Gate mergedGate = new Gate(newId, tempGates.get(from.getNodeId()));
-
-                from.deleteEdge(from.getNodeId(), to.getNodeId());
-                from.deleteEdge(to.getNodeId(), from.getNodeId());
-                to.deleteEdge(from.getNodeId(), to.getNodeId());
-                to.deleteEdge(to.getNodeId(), from.getNodeId());
-                from.getIncidentEdges().forEach(edge ->{
-                    if (Objects.equals(edge.getNodeFromId(), from.getNodeId()) ) {
-                        edge.setNodeFromId(mergedGate.getNodeId());
-                        mergedGate.getIncidentEdges().add(edge);
-                    } else if (Objects.equals(edge.getNodeToId(), from.getNodeId())) {
-                        edge.setNodeToId(mergedGate.getNodeId());
-                        mergedGate.getIncidentEdges().add(edge);
-                    }
-                });
-
-                to.getIncidentEdges().forEach(edge ->{
-                    if (Objects.equals(edge.getNodeFromId(), to.getNodeId()) ) {
-                        edge.setNodeFromId(mergedGate.getNodeId());
-                        mergedGate.getIncidentEdges().add(edge);
-                    } else if (Objects.equals(edge.getNodeToId(), to.getNodeId())) {
-                        edge.setNodeToId(mergedGate.getNodeId());
-                        mergedGate.getIncidentEdges().add(edge);
-                    }
-                });
-
-                nodes.remove(from.getNodeId());
-                nodes.remove(to.getNodeId());
-                tempGates.remove(from.getNodeId());
-                tempGates.remove(to.getNodeId());
-                nodes.put(mergedGate.getNodeId(), mergedGate);
-                gates.put(mergedGate.getNodeId(), mergedGate.getGateId());
-            }
-        });
-
-        edges = tempEdges.stream().filter(
-                edge -> nodes.containsKey(edge.getNodeFromId()) && nodes.containsKey(edge.getNodeToId())
-        ).collect(Collectors.toList());
 
         return createBuilding(nodes, gates, spaces, edges);
     }

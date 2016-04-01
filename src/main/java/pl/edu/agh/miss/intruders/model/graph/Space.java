@@ -2,7 +2,7 @@ package pl.edu.agh.miss.intruders.model.graph;
 
 public class Space extends Node {
     private String spaceId;
-    private double probability = 0.01;
+    private double probability = DEFAULT_PROBABILITY;
 
     public Space(String nodeId, String spaceId) {
         super(nodeId);
