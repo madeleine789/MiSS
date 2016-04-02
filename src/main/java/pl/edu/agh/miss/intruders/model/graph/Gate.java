@@ -11,4 +11,8 @@ public class Gate extends Node {
     public String getGateId() {
         return gateId;
     }
+
+    public String getLabel() {
+        return this.getNodeId().substring(4) + " [" + this.getGateId().replace("Wall", "G") + "]";
+    }
 }

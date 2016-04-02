@@ -46,7 +46,7 @@
 		{
 			"nodeFromId": "Node4",
 			"nodeToId": "Node3",
-			"cost": 0.3
+			"cost": 0.7
 		}
 	],
 	"gate-nodes" : [

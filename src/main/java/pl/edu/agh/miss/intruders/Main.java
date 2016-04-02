@@ -2,6 +2,7 @@ package pl.edu.agh.miss.intruders;
 
 import pl.edu.agh.miss.intruders.model.graph.Building;
 import pl.edu.agh.miss.intruders.service.IOService;
+import pl.edu.agh.miss.intruders.view.GraphView;
 
 import java.io.File;
 
@@ -16,5 +17,7 @@ public class Main {
 
         Building b = IOService.importFromJson(file);
         System.out.println(b.toString());
+        GraphView graphView = new GraphView().withMergedEdges(false).withNodeLabels(true).withEdgeLabels(true);
+        graphView.generateAndDisplay(b);
     }
 }

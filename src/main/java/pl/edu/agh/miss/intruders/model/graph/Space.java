@@ -20,4 +20,8 @@ public class Space extends Node {
     public double getProbability() {
         return probability;
     }
+
+    public String getLabel() {
+        return this.getNodeId().substring(4) + " [" + this.getSpaceId().replace("Space", "S") + "]";
+    }
 }

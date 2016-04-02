@@ -31,6 +31,14 @@ public class Building {
         return spaces;
     }
 
+    public boolean isGate(String nodeId) {
+        return this.gates.containsKey(nodeId);
+    }
+
+    public boolean isSpace(String nodeId) {
+        return this.spaces.containsKey(nodeId);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
