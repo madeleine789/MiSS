@@ -17,7 +17,7 @@ public class Main {
 
         Building b = IOService.importFromJson(file);
         System.out.println(b.toString());
-        GraphView graphView = new GraphView().withMergedEdges(false).withNodeLabels(true).withEdgeLabels(true);
+        GraphView graphView = new GraphView().withMergedEdges(false).withNodeLabels(true).withEdgeLabels(true).withRobots(true);
         graphView.generateAndDisplay(b);
     }
 }

@@ -11,6 +11,7 @@ public class GraphView {
     private boolean mergedEdges = false;
     private boolean nodeLabels = false;
     private boolean edgeLabels = false;
+    private boolean robots = false;
 
     public void generateAndDisplay(Building building) {
         if(!mergedEdges)
@@ -44,13 +45,15 @@ public class GraphView {
                 node.addAttribute("ui.style", "text-alignment: under;");
             }
 
-            if (node.getId().contains("S"))
+            if (node.getId().contains("S")) {
                 node.addAttribute("ui.style", "shape : box; size: 15px, 15px; fill-color: rgb(0,100,255);");
-            else if (node.getId().contains("G"))
-                node.addAttribute("ui.style", "shape : diamond; fill-color: rgb(255,100,0);");
-
+                if (robots) {
+                    node.addAttribute("ui.style", "icon: url('./src/main/resources/robot.png'); icon-mode: at-left; ");
+                }
+            } else if (node.getId().contains("G")) {
+                node.addAttribute("ui.style", "shape : diamond; size: 15px, 15px; fill-color: rgb(255,100,0);");
+            }
         }
-
     }
 
     public GraphView withMergedEdges(boolean value) {
@@ -65,6 +68,11 @@ public class GraphView {
 
     public GraphView withNodeLabels(boolean value) {
         this.nodeLabels = value;
+        return this;
+    }
+
+    public GraphView withRobots(boolean value) {
+        this.robots = value;
         return this;
     }
 }
