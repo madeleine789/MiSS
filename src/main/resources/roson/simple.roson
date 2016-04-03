@@ -71,7 +71,8 @@
         {
           "type": "space-node",
           "spaceId": "Space2",
-          "nodeId": "Node4"
+          "nodeId": "Node4",
+          "probability": 0.5
         }
     ]
 }

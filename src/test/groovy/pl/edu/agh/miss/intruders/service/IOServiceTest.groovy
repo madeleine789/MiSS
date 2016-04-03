@@ -25,16 +25,16 @@ class IOServiceTest extends Specification {
         assertEquals(building.spaces.size(), 2)
         assertEquals(building.gates.size(), 2)
         assertEquals(building.edges.size(), 6)
-        assertEquals(building.spaces.get("Node1").incidentEdges.size(), 2)
-        assertEquals(building.gates.get("Node2").incidentEdges.size(), 4)
+        assertEquals(building.getNode("Node1").incidentEdges.size(), 2)
+        assertEquals(building.getNode("Node2").incidentEdges.size(), 4)
     }
 
     def "should set probability if probability field was found"() {
         when:
         Building building = IOService.importFromJson(file)
         then:
-        assertEquals(building.spaces.get("Node1").getProbability(), 0.8, 0.00001)
-        assertEquals(building.spaces.get("Node4").getProbability(), Node.DEFAULT_PROBABILITY, 0.00001)
+        assertEquals(building.getNode("Node1").getProbability(), 0.8, 0.00001)
+        assertEquals(building.getNode("Node2").getProbability(), Node.DEFAULT_PROBABILITY, 0.00001)
     }
 
 }

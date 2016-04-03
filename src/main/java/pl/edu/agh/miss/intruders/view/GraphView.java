@@ -5,6 +5,7 @@ import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.MultiGraph;
 import pl.edu.agh.miss.intruders.model.graph.*;
 import pl.edu.agh.miss.intruders.model.graph.Edge;
+import pl.edu.agh.miss.intruders.model.graph.Node;
 
 public class GraphView {
 
@@ -40,18 +41,25 @@ public class GraphView {
         }
 
         for (org.graphstream.graph.Node node : graph) {
+            String id = "Node" + node.getId().substring(0, node.getId().indexOf(" "));
+            Node n = building.getNode(id);
+            String color = ColorUtils.getRGBString(ColorUtils.probabilityToColor(n.getProbability()));
+
+            node.addAttribute("ui.style", "stroke-mode: plain; stroke-color: rgb(0,0,0);");
+            node.addAttribute("ui.style", "fill-color:  " + color + ";");
+
+            if (building.isSpace(id)) {
+                node.addAttribute("ui.style", "shape : box; size: 15px, 15px;");
+                if (robots && n.isRobotThere()) {
+                    node.addAttribute("ui.style", "icon: url('./src/main/resources/robot.png'); icon-mode: at-left; ");
+                }
+            } else if (building.isGate(id)) {
+                node.addAttribute("ui.style", "shape : diamond; size: 15px, 15px;");
+            }
+
             if (nodeLabels) {
                 node.addAttribute("ui.label", node.getId());
                 node.addAttribute("ui.style", "text-alignment: under;");
-            }
-
-            if (node.getId().contains("S")) {
-                node.addAttribute("ui.style", "shape : box; size: 15px, 15px; fill-color: rgb(0,100,255);");
-                if (robots) {
-                    node.addAttribute("ui.style", "icon: url('./src/main/resources/robot.png'); icon-mode: at-left; ");
-                }
-            } else if (node.getId().contains("G")) {
-                node.addAttribute("ui.style", "shape : diamond; size: 15px, 15px; fill-color: rgb(255,100,0);");
             }
         }
     }
