@@ -25,6 +25,7 @@ public class IOService {
         Map<String, String> gates = new HashMap<>();
         Map<String, Space> spaces = new HashMap<>();
         List<Edge> edges = new ArrayList<>();
+        final boolean[] automaticLayout = { true };
 
         gatesNode.forEach(gateNode -> {
             Gate gate = new Gate(gateNode.get("nodeId").asText(), gateNode.get("gateId").asText());
@@ -39,6 +40,11 @@ public class IOService {
 
         nodesNode.forEach(nodeNode -> {
             Node node = new Node(nodeNode.get("id").asText());
+            if (nodeNode.has("position")) {
+                node.setX(nodeNode.get("position").get("x").asDouble());
+                node.setY(nodeNode.get("position").get("y").asDouble());
+                automaticLayout[0] = false;
+            }
             nodes.put(node.getNodeId(), node);
         });
 
@@ -53,7 +59,7 @@ public class IOService {
             edges.add(edge);
         });
 
-        return createBuilding(nodes, gates, spaces, edges);
+        return createBuilding(nodes, gates, spaces, edges, automaticLayout[0]);
     }
 
     public static void exportToJson(Building building, File file) throws IOException {
@@ -68,16 +74,22 @@ public class IOService {
     }
 
     private static Building createBuilding(Map<String, Node> nodes, Map<String, String> gates,
-                                           Map<String, Space> spaces, List<Edge> edges) {
+                                           Map<String, Space> spaces, List<Edge> edges, boolean
+                                                   automaticLayout) {
         Building building = new Building();
+        building.setAutomaticLayout(automaticLayout);
         nodes.forEach((nodeId, node) -> {
             if (gates.containsKey(nodeId)){
                 Gate gate = new Gate(nodeId, gates.get(nodeId));
                 gate.setIncidentEdges(node.getIncidentEdges());
+                gate.setX(node.getX());
+                gate.setY(node.getY());
                 building.addGate(gate);
             } else if (spaces.containsKey(nodeId)){
                 Space space = spaces.get(nodeId);
                 space.setIncidentEdges(node.getIncidentEdges());
+                space.setX(node.getX());
+                space.setY(node.getY());
                 building.addSpace(space);
             }
         });

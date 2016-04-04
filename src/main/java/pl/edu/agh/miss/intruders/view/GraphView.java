@@ -3,6 +3,7 @@ package pl.edu.agh.miss.intruders.view;
 
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.MultiGraph;
+import org.graphstream.ui.view.Viewer;
 import pl.edu.agh.miss.intruders.model.graph.*;
 import pl.edu.agh.miss.intruders.model.graph.Edge;
 import pl.edu.agh.miss.intruders.model.graph.Node;
@@ -21,8 +22,11 @@ public class GraphView {
         Graph graph = new MultiGraph("building");
         graph.setStrict(false);
         graph.setAutoCreate(true);
-        graph.display();
-
+        Viewer viewer = graph.display();
+        if(building.needsAutomaticLayout())
+            viewer.enableAutoLayout();
+        else viewer.disableAutoLayout();
+        
         int i = 0;
         for (Edge edge : building.getEdges()) {
             String start, end;
@@ -43,6 +47,10 @@ public class GraphView {
         for (org.graphstream.graph.Node node : graph) {
             String id = "Node" + node.getId().substring(0, node.getId().indexOf(" "));
             Node n = building.getNode(id);
+            if(!building.needsAutomaticLayout()) {
+                node.setAttribute("x", n.getX());
+                node.setAttribute("y", n.getY());
+            }
             String color = ColorUtils.getRGBString(ColorUtils.probabilityToColor(n.getProbability()));
 
             node.addAttribute("ui.style", "stroke-mode: plain; stroke-color: rgb(0,0,0);");

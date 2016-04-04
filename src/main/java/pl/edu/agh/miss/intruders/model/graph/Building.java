@@ -6,6 +6,7 @@ public class Building {
     private Map<String, Gate> gates = new HashMap<>();
     private Map<String, Space> spaces = new HashMap<>();
     private List<Edge> edges = new LinkedList<>();
+    private boolean automaticLayout = true;
 
     public  Gate addGate(Gate gate) {
         return gates.put(gate.getNodeId(), gate);
@@ -43,6 +44,14 @@ public class Building {
         if (isSpace(id)) return this.spaces.get(id);
         else if (isGate(id)) return this.gates.get(id);
         else return null;
+    }
+
+    public boolean needsAutomaticLayout() {
+        return automaticLayout;
+    }
+
+    public void setAutomaticLayout(boolean automaticLayout) {
+        this.automaticLayout = automaticLayout;
     }
 
     @Override

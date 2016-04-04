@@ -11,6 +11,8 @@ public class Node {
     private List<Edge> incidentEdges = new ArrayList<>();
     private double probability = DEFAULT_PROBABILITY;
     private boolean isRobotThere = true;
+    private double x;
+    private double y;
 
     public Node(String nodeId) {
         this.nodeId = nodeId;
@@ -34,6 +36,22 @@ public class Node {
 
     public void setProbability(double probability) {
         this.probability = probability;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 
     public boolean isRobotThere() {
