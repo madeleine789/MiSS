@@ -13,11 +13,11 @@ public class SampleDoorEdge implements DoorEdge {
 	
 	private DoorNode destination;
 	
-	private int length;
+	private float length;
 	
-	private int probability;
+	private float probability;
 	
-	private Queue<Integer> intruderQueue;
+	private Queue<Float> intruderQueue;
 	
 	private Queue<Robot> robotsQueue;
 	
@@ -48,7 +48,7 @@ public class SampleDoorEdge implements DoorEdge {
 
 	
 	@Override
-	public int getLength() {
+	public float getLength() {
 		return length;
 	}
 	
@@ -58,17 +58,17 @@ public class SampleDoorEdge implements DoorEdge {
 	}
 
 	@Override
-	public Queue<Integer> getIntruderQueue() {
+	public Queue<Float> getIntruderQueue() {
 		return intruderQueue;
 	}
 
 	@Override
-	public int getProbability() {
+	public float getProbability() {
 		return probability;
 	}
 
 	@Override
-	public void setProbability(int weight) {
+	public void setProbability(float weight) {
 		this.probability = weight;
 	}
 
@@ -78,7 +78,7 @@ public class SampleDoorEdge implements DoorEdge {
 	}
 
 	@Override
-	public void setIntrudersQueue(Queue<Integer> queue) {
+	public void setIntrudersQueue(Queue<Float> queue) {
 		this.intruderQueue = queue;
 	}
 
@@ -91,7 +91,7 @@ public class SampleDoorEdge implements DoorEdge {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Edge "+getName()+": ");
-		for (Integer i : intruderQueue) {
+		for (Float i : intruderQueue) {
 			sb.append(i+", ");
 		}
 		sb.append("\n");

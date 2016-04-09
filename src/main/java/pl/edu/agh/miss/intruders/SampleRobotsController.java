@@ -49,7 +49,7 @@ public class SampleRobotsController implements RobotsController {
 				for (Robot robot : node.getRobots()) {
 					for (DoorNode nodeToUpdate : room.getDoorNodes()) {
 						for (DoorEdge edge : nodeToUpdate.getEdges()) {
-							Queue<Integer> newIntruderProb = new LinkedList<>();
+							Queue<Float> newIntruderProb = new LinkedList<>();
 							edge.getIntruderQueue().forEach(prob->newIntruderProb.add(config.getNewProbability(prob, robot)));
 							edge.setIntrudersQueue(newIntruderProb);
 						}

@@ -31,9 +31,9 @@ public interface DoorNode {
 	 * (see DoorEdge for details). Returned weight might be compared to other
 	 * weights retrieved from other nodes in the same time step.
 	 */
-	int getProbability();
+	float getProbability();
 	
-	void setProbability(int prob);
+	void setProbability(float prob);
 	
 
 	/** Get array of robots currently in the DoorNode */
@@ -54,22 +54,22 @@ public interface DoorNode {
 	void setTheOtherSide(DoorNode node);
 
 	/** Get the probability of the intruder passing through the door. */
-	int getPassThroughProbability();
+	float getPassThroughProbability();
 
 	/** Set the probability of the intruder passing through the door. */
-	void setPassThroughProbability(int weight);
+	void setPassThroughProbability(float weight);
 
 	/**
 	 * Get the probability of the intruder staying in place for the next time
 	 * tick.
 	 */
-	int getStayProbability();
+	float getStayProbability();
 
 	/**
 	 * Set the probability of the intruder staying in place for the next time
 	 * tick.
 	 */
-	void setStayProbability(int weight);
+	void setStayProbability(float weight);
 
 	/** Move a robot to through an edge. */
 	void move(Robot robot, DoorEdge edge);

@@ -34,8 +34,8 @@ public class Simulator {
 		robotsController.init(doorNodes,rooms);
 		for (int i = 0; i < 10; i++) {
 			intruderController.update();
-//			robotsController.update();
-//			robotsController.reduceProbabilities(config);
+			robotsController.update();
+			robotsController.reduceProbabilities(config);
 			System.out.println("###");
 			for (DoorNode node : doorNodes) {
 				System.out.println(node);

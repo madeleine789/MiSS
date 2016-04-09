@@ -18,7 +18,7 @@ public class SampleIntruderController implements IntruderController {
 	@Override
 	public void update() {
 		for (DoorNode node : doorNodes) {
-			int intruderByTheDoorProb = node.getProbability();
+			float intruderByTheDoorProb = node.getProbability();
 			for (DoorEdge edge : node.getEdges()) {
 				if (edge.getDestination().equals(node)) {
 					intruderByTheDoorProb += edge.getIntruderQueue().poll();
@@ -27,16 +27,14 @@ public class SampleIntruderController implements IntruderController {
 		
 			for (DoorEdge edge : node.getEdges()) {
 				if (edge.getSource().equals(node)) {
-					int intruderMoveProb = intruderByTheDoorProb*edge.getProbability();
+					float intruderMoveProb = intruderByTheDoorProb*edge.getProbability();
 					edge.getIntruderQueue().add(intruderMoveProb);
-					intruderByTheDoorProb -= intruderMoveProb;
 				}
 			}
 			DoorNode otherSide = node.getTheOtherSide();
-			int intruderPassThroughProb = intruderByTheDoorProb*node.getPassThroughProbability();
+			float intruderPassThroughProb = intruderByTheDoorProb*node.getPassThroughProbability();
 			otherSide.setProbability(otherSide.getProbability()+intruderPassThroughProb);
-			intruderByTheDoorProb -= intruderPassThroughProb;
-			node.setProbability(intruderByTheDoorProb);
+			node.setProbability(intruderByTheDoorProb*node.getStayProbability());
 		}
 	}
 

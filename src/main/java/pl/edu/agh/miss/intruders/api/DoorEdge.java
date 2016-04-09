@@ -24,7 +24,7 @@ public interface DoorEdge {
 	void setDestination(DoorNode destination);
 
 	/** Edge length (in time ticks). */
-	int getLength();
+	float getLength();
 	
 	void setLength(int length);
 
@@ -35,17 +35,17 @@ public interface DoorEdge {
 	 * how much of the intruder presence probability will be moved through the
 	 * node in the time step.
 	 */
-	Queue<Integer> getIntruderQueue();
+	Queue<Float> getIntruderQueue();
 	
-	void setIntrudersQueue(Queue<Integer> queue);
+	void setIntrudersQueue(Queue<Float> queue);
 	
 	Queue<Robot> getRobotsQueue();
 	
 	void setRobotsQueue(Queue<Robot> queue);
 
 	/** Get the probability of the intruder moving through this edge. */
-	int getProbability();
+	float getProbability();
 
 	/** Set the probability of the intruder moving through this edge. */
-	void setProbability(int weight);
+	void setProbability(float weight);
 }

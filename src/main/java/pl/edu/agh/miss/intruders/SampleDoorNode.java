@@ -13,7 +13,11 @@ public class SampleDoorNode implements DoorNode {
 	
 	private List<DoorEdge> edges;
 	
-	int probability;
+	float probability;
+	
+	float stayProbability;
+	
+	float passThroughProbability;
 	
 	private DoorNode otherSide;
 	
@@ -36,12 +40,12 @@ public class SampleDoorNode implements DoorNode {
 	}
 
 	@Override
-	public int getProbability() {
+	public float getProbability() {
 		return probability;
 	}
 	
 	@Override
-	public void setProbability(int prob) {
+	public void setProbability(float prob) {
 		this.probability = prob;
 	}
 
@@ -60,27 +64,23 @@ public class SampleDoorNode implements DoorNode {
 	}
 
 	@Override
-	public int getPassThroughProbability() {
-		// TODO Auto-generated method stub
-		return 0;
+	public float getPassThroughProbability() {
+		return passThroughProbability;
 	}
 
 	@Override
-	public void setPassThroughProbability(int weight) {
-		// TODO Auto-generated method stub
-
+	public void setPassThroughProbability(float weight) {
+		this.passThroughProbability = weight;
 	}
 
 	@Override
-	public int getStayProbability() {
-		// TODO Auto-generated method stub
-		return 0;
+	public float getStayProbability() {
+		return stayProbability;
 	}
 
 	@Override
-	public void setStayProbability(int weight) {
-		// TODO Auto-generated method stub
-
+	public void setStayProbability(float weight) {
+		this.stayProbability = weight;
 	}
 
 	@Override

@@ -34,24 +34,24 @@ public class Main {
 		ab.setSource(a);
 		ab.setDestination(b);
 		ab.setLength(2);
-		ab.setProbability(1);		
+		ab.setProbability((float)1);		
 		ba.setSource(b);
 		ba.setDestination(a);
 		ba.setLength(2);
-		ba.setProbability(1);
+		ba.setProbability((float)1);
 		
 		a.addEdge(ab);
 		a.addEdge(ba);
 		b.addEdge(ab);
 		b.addEdge(ba);
 		
-		Queue<Integer> abQueue = new LinkedList<>();
-		abQueue.add(0);
-		abQueue.add(0);
+		Queue<Float> abQueue = new LinkedList<>();
+		abQueue.add((float)0);
+		abQueue.add((float)0);
 		ab.setIntrudersQueue(abQueue);
-		Queue<Integer> baQueue = new LinkedList<>();
-		baQueue.add(0);
-		baQueue.add(0);
+		Queue<Float> baQueue = new LinkedList<>();
+		baQueue.add((float)0);
+		baQueue.add((float)0);
 		ba.setIntrudersQueue(baQueue);
 		
 		Queue<Robot> abRQueue = new LinkedList<>();
@@ -69,8 +69,10 @@ public class Main {
 		b.setName("B");
 		a.setTheOtherSide(b);
 		b.setTheOtherSide(a);
-		a.setProbability(30);
-		b.setProbability(40);
+		a.setProbability((float)0.5);
+		b.setProbability((float)0.5);
+		a.setStayProbability((float)0);
+		b.setStayProbability((float)0);
 		
 		nodes.add(a);
 		nodes.add(b);		
