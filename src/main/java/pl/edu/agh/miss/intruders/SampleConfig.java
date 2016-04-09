@@ -7,7 +7,10 @@ public class SampleConfig implements Config {
 
 	@Override
 	public int getNewProbability(int currentProbability, Robot robot) {
-		return currentProbability/10+1;
+		if (robot!=null) {
+			return currentProbability/10+1;
+		}
+		return currentProbability;
 	}
 
 }

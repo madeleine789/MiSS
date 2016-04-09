@@ -12,6 +12,11 @@ import java.util.List;
  * in another room ("the other side" of the door).
  */
 public interface DoorNode {
+	
+	String getName();
+	
+	void setName(String name);
+	
 	/** Get the Door object associated with this door */
 	Door getDoor();
 
@@ -28,6 +33,8 @@ public interface DoorNode {
 	 */
 	int getProbability();
 	
+	void setProbability(int prob);
+	
 
 	/** Get array of robots currently in the DoorNode */
 	Robot[] getRobots();
@@ -35,12 +42,16 @@ public interface DoorNode {
 	/** Get an array of the other doors in the room */
 	List<DoorEdge> getEdges();
 	
+	void addEdge(DoorEdge edge);
+	
 	List<DoorNode> getOtherDoors();
 
 	/**
 	 * Get the corresponding door object in the other room ("passing through")
 	 */
 	DoorNode getTheOtherSide();
+	
+	void setTheOtherSide(DoorNode node);
 
 	/** Get the probability of the intruder passing through the door. */
 	int getPassThroughProbability();

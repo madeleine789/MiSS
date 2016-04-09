@@ -1,5 +1,6 @@
 package pl.edu.agh.miss.intruders;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import pl.edu.agh.miss.intruders.api.Door;
@@ -11,6 +12,16 @@ import pl.edu.agh.miss.intruders.api.Room;
 public class SampleDoorNode implements DoorNode {
 	
 	private List<DoorEdge> edges;
+	
+	int probability;
+	
+	private DoorNode otherSide;
+	
+	private String name;
+	
+	public SampleDoorNode() {
+		edges = new LinkedList<>();
+	}
 
 	@Override
 	public Door getDoor() {
@@ -26,20 +37,26 @@ public class SampleDoorNode implements DoorNode {
 
 	@Override
 	public int getProbability() {
-		// TODO Auto-generated method stub
-		return 0;
+		return probability;
+	}
+	
+	@Override
+	public void setProbability(int prob) {
+		this.probability = prob;
 	}
 
 	@Override
 	public Robot[] getRobots() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Robot> robots = new LinkedList<>();
+		for (DoorEdge edge : getEdges()) {
+			robots.addAll(edge.getRobotsQueue());
+		}
+		return (Robot[]) robots.toArray();
 	}
 
 	@Override
 	public DoorNode getTheOtherSide() {
-		// TODO Auto-generated method stub
-		return null;
+		return otherSide;
 	}
 
 	@Override
@@ -87,6 +104,38 @@ public class SampleDoorNode implements DoorNode {
 	public List<DoorNode> getOtherDoors() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void addEdge(DoorEdge edge) {
+		edges.add(edge);
+	}
+
+	@Override
+	public void setTheOtherSide(DoorNode node) {
+		this.otherSide = node;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Node "+getName()+"\n");
+		sb.append("Edges:\n");
+		for (DoorEdge edge : edges) {
+			sb.append("\t"+edge.toString());
+		}
+		sb.append("probability: "+probability+"\n");
+		return sb.toString();
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

@@ -9,15 +9,19 @@ import pl.edu.agh.miss.intruders.api.Config;
 import pl.edu.agh.miss.intruders.api.DoorEdge;
 import pl.edu.agh.miss.intruders.api.DoorNode;
 import pl.edu.agh.miss.intruders.api.Robot;
+import pl.edu.agh.miss.intruders.api.Room;
 import pl.edu.agh.miss.intruders.api.robots.RobotsController;
 
 public class SampleRobotsController implements RobotsController {
 
 	private List<DoorNode> doorNodes;
+	
+	private List<Room> rooms;
 
 	@Override
-	public void init(List<DoorNode> doorNodes) {
+	public void init(List<DoorNode> doorNodes, List<Room> rooms) {
 		this.doorNodes = doorNodes;
+		this.rooms = rooms;
 	}
 
 	@Override
@@ -40,12 +44,16 @@ public class SampleRobotsController implements RobotsController {
 
 	@Override
 	public void reduceProbabilities(Config config) {
-		for (DoorNode node : doorNodes) {
-			for (Robot robot : node.getRobots()) {
-				for (DoorEdge edge : node.getEdges()) {
-					Queue<Integer> newIntruderProb = new LinkedList<>();
-					edge.getIntruderQueue().forEach(prob->newIntruderProb.add(config.getNewProbability(prob, robot)));
-					edge.setIntrudersQueue(newIntruderProb);
+		for (Room room : rooms) {
+			for (DoorNode node : room.getDoorNodes()) {
+				for (Robot robot : node.getRobots()) {
+					for (DoorNode nodeToUpdate : room.getDoorNodes()) {
+						for (DoorEdge edge : nodeToUpdate.getEdges()) {
+							Queue<Integer> newIntruderProb = new LinkedList<>();
+							edge.getIntruderQueue().forEach(prob->newIntruderProb.add(config.getNewProbability(prob, robot)));
+							edge.setIntrudersQueue(newIntruderProb);
+						}
+					}
 				}
 			}
 		}

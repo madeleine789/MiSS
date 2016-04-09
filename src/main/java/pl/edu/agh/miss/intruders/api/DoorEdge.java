@@ -10,14 +10,23 @@ import java.util.Queue;
  * robot/intruder to move through it.
  */
 public interface DoorEdge {
+	
+	String getName();
+	
 	/** Source DoorNode. */
 	DoorNode getSource();
+	
+	void setSource(DoorNode source);
 
 	/** Destination DoorNode. */
 	DoorNode getDestination();
+	
+	void setDestination(DoorNode destination);
 
 	/** Edge length (in time ticks). */
 	int getLength();
+	
+	void setLength(int length);
 
 	/**
 	 * Probability transition events for the future steps.
@@ -31,6 +40,8 @@ public interface DoorEdge {
 	void setIntrudersQueue(Queue<Integer> queue);
 	
 	Queue<Robot> getRobotsQueue();
+	
+	void setRobotsQueue(Queue<Robot> queue);
 
 	/** Get the probability of the intruder moving through this edge. */
 	int getProbability();
