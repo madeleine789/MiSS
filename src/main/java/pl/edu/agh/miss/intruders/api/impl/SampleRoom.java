@@ -1,4 +1,4 @@
-package pl.edu.agh.miss.intruders;
+package pl.edu.agh.miss.intruders.api.impl;
 
 import java.util.LinkedList;
 import java.util.List;

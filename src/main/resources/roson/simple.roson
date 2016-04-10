@@ -53,12 +53,14 @@
 		{
 			"type": "gate-node",
 			"nodeId": "Node2",
-			"gateId": "Wall1"
+			"gateId": "Wall1",
+			"probability": 0.2
 		},
 		{
 			"type": "gate-node",
 			"nodeId": "Node3",
-			"gateId": "Wall1"
+			"gateId": "Wall1",
+			"probability": 0.3
 		}
 	],
 	"space-nodes": [

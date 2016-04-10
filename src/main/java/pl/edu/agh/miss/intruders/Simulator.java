@@ -2,6 +2,7 @@ package pl.edu.agh.miss.intruders;
 
 import java.util.List;
 
+import pl.edu.agh.miss.intruders.api.Building;
 import pl.edu.agh.miss.intruders.api.Config;
 import pl.edu.agh.miss.intruders.api.DoorNode;
 import pl.edu.agh.miss.intruders.api.Room;
@@ -20,13 +21,13 @@ public class Simulator {
 	
 	private List<Room> rooms;
 
-	public Simulator(IntruderController intruderController, RobotsController robotsController, List<DoorNode> doorNodes,
-			Config config, List<Room> rooms) {
+	public Simulator(IntruderController intruderController, RobotsController robotsController, Config config,
+					 Building building) {
 		this.intruderController = intruderController;
 		this.robotsController = robotsController;
-		this.doorNodes = doorNodes;
+		this.doorNodes = building.getDoorNodes();
 		this.config = config;
-		this.rooms = rooms;
+		this.rooms = building.getRooms();
 	}
 
 	public void simulate() {

@@ -1,8 +1,8 @@
-package pl.edu.agh.miss.intruders.model.graph;
+package pl.edu.agh.miss.intruders.model;
 
 import java.util.*;
 
-public class Building {
+public class RosonBuilding {
     private Map<String, Gate> gates = new HashMap<>();
     private Map<String, Space> spaces = new HashMap<>();
     private List<Edge> edges = new LinkedList<>();

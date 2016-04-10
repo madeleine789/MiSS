@@ -1,4 +1,4 @@
-package pl.edu.agh.miss.intruders;
+package pl.edu.agh.miss.intruders.api.impl;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class SampleDoorNode implements DoorNode {
 		for (DoorEdge edge : getEdges()) {
 			robots.addAll(edge.getRobotsQueue());
 		}
-		return (Robot[]) robots.toArray();
+		return robots.toArray(new Robot[robots.size()]);
 	}
 
 	@Override

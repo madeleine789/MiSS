@@ -1,12 +1,13 @@
-package pl.edu.agh.miss.intruders.view;
+package pl.edu.agh.miss.intruders.service;
 
 
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.ui.view.Viewer;
-import pl.edu.agh.miss.intruders.model.graph.*;
-import pl.edu.agh.miss.intruders.model.graph.Edge;
-import pl.edu.agh.miss.intruders.model.graph.Node;
+import pl.edu.agh.miss.intruders.model.RosonBuilding;
+import pl.edu.agh.miss.intruders.model.Edge;
+import pl.edu.agh.miss.intruders.model.Node;
+import pl.edu.agh.miss.intruders.service.utils.ColorUtils;
 
 public class GraphView {
 
@@ -15,7 +16,7 @@ public class GraphView {
     private boolean edgeLabels = false;
     private boolean robots = false;
 
-    public void generateAndDisplay(Building building) {
+    public void generateAndDisplay(RosonBuilding building) {
         if(!mergedEdges)
             System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
@@ -51,7 +52,8 @@ public class GraphView {
                 node.setAttribute("x", n.getX());
                 node.setAttribute("y", n.getY());
             }
-            String color = ColorUtils.getRGBString(ColorUtils.probabilityToColor(n.getProbability()));
+            String color = ColorUtils.getRGBString(ColorUtils.probabilityToColor(n.getProbability
+                    ()));
 
             node.addAttribute("ui.style", "stroke-mode: plain; stroke-color: rgb(0,0,0);");
             node.addAttribute("ui.style", "fill-color:  " + color + ";");

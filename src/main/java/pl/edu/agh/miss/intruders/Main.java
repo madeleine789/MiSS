@@ -1,26 +1,24 @@
 package pl.edu.agh.miss.intruders;
 
-import pl.edu.agh.miss.intruders.model.graph.Building;
-import pl.edu.agh.miss.intruders.service.IOService;
-import pl.edu.agh.miss.intruders.view.GraphView;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import pl.edu.agh.miss.intruders.api.Config;
-import pl.edu.agh.miss.intruders.api.DoorEdge;
-import pl.edu.agh.miss.intruders.api.DoorNode;
-import pl.edu.agh.miss.intruders.api.Robot;
-import pl.edu.agh.miss.intruders.api.Room;
+import pl.edu.agh.miss.intruders.api.*;
+import pl.edu.agh.miss.intruders.api.impl.*;
 import pl.edu.agh.miss.intruders.api.intruder.IntruderController;
 import pl.edu.agh.miss.intruders.api.robots.RobotsController;
+import pl.edu.agh.miss.intruders.model.RosonBuilding;
+import pl.edu.agh.miss.intruders.service.Converter;
+import pl.edu.agh.miss.intruders.service.IOService;
+import pl.edu.agh.miss.intruders.service.GraphView;
 
 public class Main {
 	
 	public static void main(String[] args) throws IOException {
+
 		File file;
 		if (args.length < 2){
 			file = new File(Main.class.getClassLoader().getResource("roson/simple.roson").getFile());
@@ -28,16 +26,17 @@ public class Main {
 			file = new File(args[1]);
 		}
 
-		Building b = IOService.importFromJson(file);
-		System.out.println(b.toString());
-		GraphView graphView = new GraphView().withMergedEdges(false).withNodeLabels(true).withEdgeLabels(true).withRobots(true);
+		RosonBuilding b = IOService.importFromJson(file);
+		GraphView graphView = new GraphView().withMergedEdges(false).withNodeLabels(true).withEdgeLabels(false)
+                .withRobots(true);
 		graphView.generateAndDisplay(b);
-		IntruderController ic = new SampleIntruderController();
+        Building building = Converter.rosonToSimulation(b);
+
+        IntruderController ic = new SampleIntruderController();
 		RobotsController rc = new SampleRobotsController();
-		List<DoorNode> nodes = createNodes();
-		Config config = new SampleConfig();
-		List<Room> rooms = new LinkedList<>();
-		Simulator s = new Simulator(ic, rc, nodes, config, rooms);
+        Config config = new SampleConfig();
+		SampleBuilding building1 = new SampleBuilding(new LinkedList<>(), createNodes());
+		Simulator s = new Simulator(ic, rc, config, building);
 		s.simulate();
 	}
 
@@ -51,11 +50,11 @@ public class Main {
 		ab.setSource(a);
 		ab.setDestination(b);
 		ab.setLength(2);
-		ab.setProbability((float)1);		
+		ab.setProbability(1f);
 		ba.setSource(b);
 		ba.setDestination(a);
 		ba.setLength(2);
-		ba.setProbability((float)1);
+		ba.setProbability(1f);
 		
 		a.addEdge(ab);
 		a.addEdge(ba);
@@ -63,12 +62,12 @@ public class Main {
 		b.addEdge(ba);
 		
 		Queue<Float> abQueue = new LinkedList<>();
-		abQueue.add((float)0);
-		abQueue.add((float)0);
+		abQueue.add(0f);
+		abQueue.add(0f);
 		ab.setIntrudersQueue(abQueue);
 		Queue<Float> baQueue = new LinkedList<>();
-		baQueue.add((float)0);
-		baQueue.add((float)0);
+		baQueue.add(0f);
+		baQueue.add(0f);
 		ba.setIntrudersQueue(baQueue);
 		
 		Queue<Robot> abRQueue = new LinkedList<>();
@@ -86,10 +85,10 @@ public class Main {
 		b.setName("B");
 		a.setTheOtherSide(b);
 		b.setTheOtherSide(a);
-		a.setProbability((float)0.5);
-		b.setProbability((float)0.5);
-		a.setStayProbability((float)0);
-		b.setStayProbability((float)0);
+		a.setProbability(0.5f);
+		b.setProbability(0.5f);
+		a.setStayProbability(0f);
+		b.setStayProbability(0f);
 		
 		nodes.add(a);
 		nodes.add(b);		

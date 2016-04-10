@@ -1,4 +1,4 @@
-package pl.edu.agh.miss.intruders.model.graph;
+package pl.edu.agh.miss.intruders.model;
 
 public class Gate extends Node {
     private String gateId;

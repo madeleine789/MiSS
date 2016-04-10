@@ -1,4 +1,4 @@
-package pl.edu.agh.miss.intruders;
+package pl.edu.agh.miss.intruders.api.impl;
 
 import pl.edu.agh.miss.intruders.api.Config;
 import pl.edu.agh.miss.intruders.api.Robot;

@@ -1,10 +1,10 @@
-package pl.edu.agh.miss.intruders.view;
+package pl.edu.agh.miss.intruders.service.utils;
 
 import java.awt.*;
 
-class ColorUtils {
+public class ColorUtils {
 
-    static Color probabilityToColor(double value) {
+    public static Color probabilityToColor(double value) {
         value *= 100;
 
         double r, g, b = 0;
@@ -19,7 +19,7 @@ class ColorUtils {
         return new Color((int) r, (int) g, (int) b);
     }
 
-    static String getRGBString(Color color) {
+    public static String getRGBString(Color color) {
         StringBuilder sb = new StringBuilder();
         sb.append("rgb(")
                 .append(color.getRed()).append(",")

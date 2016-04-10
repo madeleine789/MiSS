@@ -1,4 +1,4 @@
-package pl.edu.agh.miss.intruders.model.graph;
+package pl.edu.agh.miss.intruders.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ public class Node {
     public final static double DEFAULT_PROBABILITY = 0.01;
     private String nodeId;
     private List<Edge> incidentEdges = new ArrayList<>();
+    private List<Node> incidentNodes = new ArrayList<>();
     private double probability = DEFAULT_PROBABILITY;
     private boolean isRobotThere = true;
     private double x;
@@ -24,6 +25,14 @@ public class Node {
 
     public void setIncidentEdges(List<Edge> incidentEdges) {
         this.incidentEdges = incidentEdges;
+    }
+
+    public List<Node> getIncidentNodes() {
+        return incidentNodes;
+    }
+
+    public void setIncidentNodes(List<Node> incidentNodes) {
+        this.incidentNodes = incidentNodes;
     }
 
     public String getNodeId() {
