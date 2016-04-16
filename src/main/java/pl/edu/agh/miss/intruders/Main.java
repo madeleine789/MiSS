@@ -21,15 +21,15 @@ public class Main {
 
 		File file;
 		if (args.length < 2){
-			file = new File(Main.class.getClassLoader().getResource("roson/simple.roson").getFile());
+			file = new File(Main.class.getClassLoader().getResource("roson/straight.roson").getFile());
 		} else {
 			file = new File(args[1]);
 		}
 
 		RosonBuilding b = IOService.importFromJson(file);
-		GraphView graphView = new GraphView().withMergedEdges(false).withNodeLabels(true).withEdgeLabels(false)
-                .withRobots(true);
-		graphView.generateAndDisplay(b);
+//		GraphView graphView = new GraphView().withMergedEdges(false).withNodeLabels(true).withEdgeLabels(false)
+//                .withRobots(true);
+//		graphView.generateAndDisplay(b);
         Building building = Converter.rosonToSimulation(b);
 
         IntruderController ic = new SampleIntruderController();

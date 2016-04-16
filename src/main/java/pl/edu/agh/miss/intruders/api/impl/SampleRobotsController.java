@@ -45,6 +45,7 @@ public class SampleRobotsController implements RobotsController {
 	@Override
 	public void reduceProbabilities(Config config) {
 		for (Room room : rooms) {
+			System.out.println(room);
 			for (DoorNode node : room.getDoorNodes()) {
 				for (Robot robot : node.getRobots()) {
 					for (DoorNode nodeToUpdate : room.getDoorNodes()) {
