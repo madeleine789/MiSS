@@ -59,19 +59,14 @@ public class Converter {
             start.setTheOtherSide(end);
             doors.put(edge.getNodeFromId(), start);
             doors.put(edge.getNodeToId(), end);
-            /**
-            System.out.println(start.getName() + " " + start.getProbability());
-            for(Float f : startEnd.getIntruderQueue()) System.out.print(f + " ");
-            System.out.println();
-            System.out.println(end.getName() + " " + start.getProbability());
-            for(Float f : endStart.getIntruderQueue()) System.out.print(f + " ");
-            System.out.println();
-             **/
         });
 
         building.getSpaces().values().stream().forEach(node -> {
             Room room = new SampleRoom();
-            node.getIncidentNodes().forEach(n -> room.addNode(doors.get(n.getNodeId())));
+            node.getIncidentNodes().stream().filter(n -> building.isGate(node.getNodeId())).forEach(n -> room.addNode
+                    (doors.get(n.getNodeId()
+            )));
+
             if (node.isRobotThere() ) {
                 node.getIncidentNodes().stream()
                         .filter(n -> doors.get(n.getNodeId()) != null)

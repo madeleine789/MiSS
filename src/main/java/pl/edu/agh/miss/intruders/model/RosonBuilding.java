@@ -46,6 +46,13 @@ public class RosonBuilding {
         else return null;
     }
 
+    public void deleteNode(String id) {
+        Node toDelete = getNode(id);
+        this.getEdges().removeAll(toDelete.getIncidentEdges());
+        if (isGate(id)) gates.remove(id);
+        else spaces.remove(id);
+    }
+
     public boolean needsAutomaticLayout() {
         return automaticLayout;
     }

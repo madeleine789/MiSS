@@ -57,7 +57,6 @@ public class IOService {
             nodes.get(edge.getNodeFromId()).getIncidentEdges().add(edge);
             nodes.get(edge.getNodeFromId()).getIncidentNodes().add(nodes.get(edge.getNodeToId()));
             nodes.get(edge.getNodeToId()).getIncidentEdges().add(edge);
-            nodes.get(edge.getNodeToId()).getIncidentNodes().add(nodes.get(edge.getNodeFromId()));
             edges.add(edge);
         });
 
@@ -97,7 +96,15 @@ public class IOService {
                 building.addSpace(space);
             }
         });
+
+        List<Gate> toDelete = new ArrayList<>();
+        building.getGates().forEach((id, gate) -> {
+            if (gate.getIncidentNodes().size() == 1) {
+                toDelete.add(gate);
+            }
+        });
         building.addEdges(edges);
+        if (!toDelete.isEmpty()) toDelete.forEach(gate -> building.deleteNode(gate.getNodeId()));
         return building;
     }
 
