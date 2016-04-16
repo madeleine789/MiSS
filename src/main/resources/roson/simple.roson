@@ -1,0 +1,81 @@
+{
+	"nodes" : [
+		{
+			"kind": "spaceNode",
+			"id": "Node1"
+		},
+		{
+			"kind": "gateNode",
+			"id": "Node2"
+		},
+		{
+			"kind": "gateNode",
+			"id": "Node3"
+		},
+		{
+			"kind": "spaceNode",
+			"id": "Node4"
+		}
+	],
+	"node-nodes" : [
+		{
+			"nodeFromId": "Node1",
+			"nodeToId": "Node2",
+			"cost": 0.8
+		},
+		{
+			"nodeFromId": "Node2",
+			"nodeToId": "Node1",
+			"cost": 0.8
+		},
+		{
+			"nodeFromId": "Node2",
+			"nodeToId": "Node3",
+			"cost": 0.02
+		},
+		{
+			"nodeFromId": "Node3",
+			"nodeToId": "Node2",
+			"cost": 0.02
+		},
+		{
+			"nodeFromId": "Node3",
+			"nodeToId": "Node4",
+			"cost": 0.7
+		},
+		{
+			"nodeFromId": "Node4",
+			"nodeToId": "Node3",
+			"cost": 0.7
+		}
+	],
+	"gate-nodes" : [
+		{
+			"type": "gate-node",
+			"nodeId": "Node2",
+			"gateId": "Wall1",
+			"probability": 0.2
+		},
+		{
+			"type": "gate-node",
+			"nodeId": "Node3",
+			"gateId": "Wall1",
+			"probability": 0.3
+		}
+	],
+	"space-nodes": [
+        {
+          "type": "space-node",
+          "spaceId": "Space1",
+          "nodeId": "Node1",
+          "probability": 0.8
+        },
+        {
+          "type": "space-node",
+          "spaceId": "Space2",
+          "nodeId": "Node4",
+          "probability": 0.5
+        }
+    ]
+}
+
