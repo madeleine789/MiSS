@@ -16,7 +16,7 @@ public class GraphView {
     private boolean edgeLabels = false;
     private boolean robots = false;
 
-    public void generateAndDisplay(RosonBuilding building) {
+    public Graph generate(RosonBuilding building) {
         if(!mergedEdges)
             System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
@@ -72,6 +72,7 @@ public class GraphView {
                 node.addAttribute("ui.style", "text-alignment: under;");
             }
         }
+        return graph;
     }
 
     public GraphView withMergedEdges(boolean value) {

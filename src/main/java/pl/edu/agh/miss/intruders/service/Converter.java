@@ -8,19 +8,22 @@ import java.util.*;
 import java.util.function.Function;
 
 public class Converter {
-    private static RosonBuilding building;
+    private RosonBuilding rosonBuilding;
 
-
-    public static Building rosonToSimulation(RosonBuilding building) {
-        Converter.building = building;
-        return rosonToSimulationConverter.apply(building);
+    public Converter(RosonBuilding rosonBuilding) {
+        this.rosonBuilding = rosonBuilding;
     }
 
-    public static RosonBuilding simulationToRoson(Building building) {
-        return Converter.building;
+
+    public Building rosonToSimulation() {
+        return rosonToSimulationConverter.apply(this.rosonBuilding);
     }
 
-    private static Function<RosonBuilding, SampleBuilding> rosonToSimulationConverter = building -> {
+    public RosonBuilding simulationToRoson(Building building) {
+        return simulationToRosonConverter.apply(building);
+    }
+
+    private Function<RosonBuilding, SampleBuilding> rosonToSimulationConverter = building -> {
         List<DoorNode> doorNodes = new LinkedList<>();
         Map<String, DoorNode> doors = new HashMap<>();
         List<Room> rooms = new LinkedList<>();
@@ -52,9 +55,9 @@ public class Converter {
             endStart.setIntrudersQueue(generateQueue());
 
             start.setName(edge.getNodeFromId());
-            start.setProbability((float) building.getNode(edge.getNodeFromId()).getProbability());
+            start.setProbability(building.getNode(edge.getNodeFromId()).getProbability());
             end.setName(edge.getNodeToId());
-            end.setProbability((float) building.getNode(edge.getNodeToId()).getProbability());
+            end.setProbability(building.getNode(edge.getNodeToId()).getProbability());
             end.setTheOtherSide(start);
             start.setTheOtherSide(end);
             doors.put(edge.getNodeFromId(), start);
@@ -86,7 +89,17 @@ public class Converter {
         return new SampleBuilding(rooms, doorNodes);
     };
 
-    private static Function<Building, RosonBuilding> simulationToRosonConverter = building -> null;
+    private Function<Building, RosonBuilding> simulationToRosonConverter = building -> {
+        building.getDoorNodes().forEach(node -> {
+            float probability = node.getProbability();
+            this.rosonBuilding.getNode(node.getName()).getIncidentNodes().stream()
+                    .filter(n -> this.rosonBuilding.isSpace(n.getNodeId()))
+                    .forEach(n -> n.setProbability(probability));
+            this.rosonBuilding.getNode(node.getName()).setProbability(probability);
+            //System.out.println(this.rosonBuilding.getNode(node.getName()).getProbability() + " " + probability);
+        });
+        return this.rosonBuilding;
+    };
 
     private static Queue<Float> generateQueue() {
         Queue<Float> iq = new LinkedList<>();

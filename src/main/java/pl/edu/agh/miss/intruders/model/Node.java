@@ -6,11 +6,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class Node {
-    public final static double DEFAULT_PROBABILITY = 0.01;
+    private final static float DEFAULT_PROBABILITY = 0.5f;
     private String nodeId;
     private List<Edge> incidentEdges = new ArrayList<>();
     private List<Node> incidentNodes = new ArrayList<>();
-    private double probability = DEFAULT_PROBABILITY;
+    private float probability = DEFAULT_PROBABILITY;
     private boolean isRobotThere = true;
     private double x;
     private double y;
@@ -39,11 +39,15 @@ public class Node {
         return nodeId;
     }
 
-    public double getProbability() {
+    public float getProbability() {
         return probability;
     }
 
     public void setProbability(double probability) {
+        this.probability = (float) probability;
+    }
+
+    public void setProbability(float probability) {
         this.probability = probability;
     }
 
