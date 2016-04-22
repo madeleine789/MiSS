@@ -1,17 +1,15 @@
 package pl.edu.agh.miss.intruders.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class Node {
-    private final static float DEFAULT_PROBABILITY = 0.5f;
+    private final static float DEFAULT_PROBABILITY = 0.1f;
     private String nodeId;
     private List<Edge> incidentEdges = new ArrayList<>();
-    private List<Node> incidentNodes = new ArrayList<>();
+    private Set<Node> incidentNodes = new HashSet<>();
     private float probability = DEFAULT_PROBABILITY;
-    private boolean isRobotThere = true;
+    private boolean isRobotThere = false;
+    private boolean isIntruderThere = false;
     private double x;
     private double y;
 
@@ -27,11 +25,11 @@ public class Node {
         this.incidentEdges = incidentEdges;
     }
 
-    public List<Node> getIncidentNodes() {
+    public Set<Node> getIncidentNodes() {
         return incidentNodes;
     }
 
-    public void setIncidentNodes(List<Node> incidentNodes) {
+    public void setIncidentNodes(Set<Node> incidentNodes) {
         this.incidentNodes = incidentNodes;
     }
 
@@ -69,6 +67,18 @@ public class Node {
 
     public boolean isRobotThere() {
         return isRobotThere;
+    }
+
+    public void isRobotThere(boolean isRobotThere) {
+        this.isRobotThere = isRobotThere;
+    }
+
+    public boolean isIntruderThere() {
+        return isIntruderThere;
+    }
+
+    public void isIntruderThere(boolean isIntruderThere) {
+        isIntruderThere = isIntruderThere;
     }
 
     public boolean deleteEdge(String from, String to) {

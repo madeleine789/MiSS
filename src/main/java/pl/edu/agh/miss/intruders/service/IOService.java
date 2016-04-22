@@ -9,6 +9,7 @@ import pl.edu.agh.miss.intruders.model.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class IOService {
     private final static ObjectMapper mapper = new ObjectMapper();
@@ -19,6 +20,9 @@ public class IOService {
         JsonNode gatesNode = root.get("gate-nodes");
         JsonNode spacesNode = root.get("space-nodes");
         JsonNode edgesNode = root.get("node-nodes");
+        JsonNode robotsNode = root.get("space-robots");
+        JsonNode intrudersNode = root.get("space-victims");
+
 
         Map<String, Node> nodes = new HashMap<>();
         Map<String, Gate> gates = new HashMap<>();
@@ -33,9 +37,10 @@ public class IOService {
         });
 
         spacesNode.forEach(spaceNode -> {
-            Space space = new Space(spaceNode.get("nodeId").asText(), spaceNode.get("spaceId").asText());
-            if (spaceNode.has("probability")) space.setProbability(spaceNode.get("probability").asDouble());
-            spaces.put(space.getNodeId(), space);
+            if(!gates.containsKey(spaceNode.get("nodeId").asText())) {
+                Space space = new Space(spaceNode.get("nodeId").asText(), spaceNode.get("spaceId").asText());
+                spaces.put(space.getNodeId(), space);
+            }
         });
 
         nodesNode.forEach(nodeNode -> {
@@ -56,8 +61,32 @@ public class IOService {
 
             nodes.get(edge.getNodeFromId()).getIncidentEdges().add(edge);
             nodes.get(edge.getNodeFromId()).getIncidentNodes().add(nodes.get(edge.getNodeToId()));
+            nodes.get(edge.getNodeToId()).getIncidentNodes().add(nodes.get(edge.getNodeFromId()));
             nodes.get(edge.getNodeToId()).getIncidentEdges().add(edge);
             edges.add(edge);
+        });
+
+        robotsNode.forEach(robot -> {
+            String spaceId = robot.get("spaceId").asText();
+            Space space = spaces.values().stream()
+                    .filter(s -> Objects.equals(s.getSpaceId(), spaceId)).collect(Collectors.toList()).get(0);
+            space.isRobotThere(true);
+            nodes.get(space.getNodeId()).getIncidentNodes().stream()
+                    .filter(node -> gates.containsKey(node.getNodeId())).forEach(gate -> gate.isRobotThere(true));
+
+        });
+
+        intrudersNode.forEach(intruder -> {
+            String spaceId = intruder.get("spaceId").asText();
+            Space space = spaces.values().stream()
+                    .filter(val -> Objects.equals(val.getSpaceId(), spaceId)).collect(Collectors.toList()).get(0);
+            space.setProbability(1f);
+            space.isIntruderThere(true);
+            nodes.get(space.getNodeId()).getIncidentNodes().stream()
+                    .filter(node -> gates.containsKey(node.getNodeId())).forEach(gate -> {
+                gates.get(gate.getNodeId()).setProbability(1f);
+                gates.get(gate.getNodeId()).isIntruderThere(true);
+            });
         });
 
         return createBuilding(nodes, gates, spaces, edges, automaticLayout[0]);

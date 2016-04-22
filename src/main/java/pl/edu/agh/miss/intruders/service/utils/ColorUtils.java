@@ -5,6 +5,7 @@ import java.awt.*;
 public class ColorUtils {
 
     public static Color probabilityToColor(double value) {
+        value = value < 1 ? value : value - 0.1;
         value *= 100;
 
         double r, g, b = 0;
