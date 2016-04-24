@@ -37,8 +37,8 @@ public class Converter {
             DoorEdge startEnd = new SampleDoorEdge();
             DoorEdge endStart = new SampleDoorEdge();
 
-            startEnd.setLength((int) edge.getCost() * 10);
-            endStart.setLength((int) edge.getCost() * 10);
+            startEnd.setLength((int) (edge.getCost() * 10));
+            endStart.setLength((int) (edge.getCost() * 10));
             startEnd.setProbability(1f);
             endStart.setProbability(1f);
             startEnd.setDestination(end);
@@ -51,11 +51,13 @@ public class Converter {
             end.addEdge(startEnd);
             end.addEdge(endStart);
 
-            startEnd.setIntrudersQueue(generateQueue());
-            endStart.setIntrudersQueue(generateQueue());
+            startEnd.setIntrudersQueue(generateQueue(startEnd.getLength()));
+            endStart.setIntrudersQueue(generateQueue(endStart.getLength()));
 
             start.setName(edge.getNodeFromId());
             start.setProbability(building.getNode(edge.getNodeFromId()).getProbability());
+            start.setStayProbability(1f);
+            start.setPassThroughProbability(1f);
             end.setName(edge.getNodeToId());
             end.setProbability(building.getNode(edge.getNodeToId()).getProbability());
             end.setTheOtherSide(start);
@@ -70,19 +72,19 @@ public class Converter {
                     (doors.get(n.getNodeId()
             )));
 
-            if (node.isRobotThere() ) {
-                node.getIncidentNodes().stream()
-                        .filter(n -> doors.get(n.getNodeId()) != null)
-                        .forEach(n -> doors.get(n
-                        .getNodeId())
-                        .getEdges()
-                        .stream()
-                        .forEach(e -> {
-                            Queue<Robot> q = new LinkedList<>();
-                            q.add(new SampleRobot());
-                            e.setRobotsQueue(q);
-                        }));
-            }
+            node.getIncidentNodes().stream()
+                    .filter(n -> doors.get(n.getNodeId()) != null)
+                    .forEach(n -> doors.get(n
+                    .getNodeId())
+                    .getEdges()
+                    .stream()
+                    .forEach(e -> {
+                        Queue<Robot> q = new LinkedList<>();
+                        if (node.isRobotThere()) {
+                        	q.add(new SampleRobot());
+                        }
+                        e.setRobotsQueue(q);
+                    }));
             rooms.add(room);
         });
         doorNodes.addAll(doors.values());
@@ -101,11 +103,11 @@ public class Converter {
         return this.rosonBuilding;
     };
 
-    private static Queue<Float> generateQueue() {
+    private static Queue<Float> generateQueue(int size) {
         Queue<Float> iq = new LinkedList<>();
-        Random random = new Random();
-        for (int i=0; i < random.nextInt(3) + 1; i++){
-            iq.add(random.nextFloat());
+//        Random random = new Random();
+        for (int i=0; i < size; i++){
+            iq.add(0f);
         }
         return iq;
     }

@@ -24,7 +24,7 @@ public interface DoorEdge {
 	void setDestination(DoorNode destination);
 
 	/** Edge length (in time ticks). */
-	float getLength();
+	int getLength();
 	
 	void setLength(int length);
 

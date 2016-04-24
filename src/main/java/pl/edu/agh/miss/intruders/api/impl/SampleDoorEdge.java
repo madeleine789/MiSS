@@ -13,7 +13,7 @@ public class SampleDoorEdge implements DoorEdge {
 	
 	private DoorNode destination;
 	
-	private float length;
+	private int length;
 	
 	private float probability;
 	
@@ -48,7 +48,7 @@ public class SampleDoorEdge implements DoorEdge {
 
 	
 	@Override
-	public float getLength() {
+	public int getLength() {
 		return length;
 	}
 	
