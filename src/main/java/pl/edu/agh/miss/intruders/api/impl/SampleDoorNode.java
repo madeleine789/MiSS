@@ -49,7 +49,9 @@ public class SampleDoorNode implements DoorNode {
 	public Robot[] getRobots() {
 		List<Robot> robots = new LinkedList<>();
 		for (DoorEdge edge : getEdges()) {
-			robots.addAll(edge.getRobotsQueue());
+			if (edge.getSource().equals(this)) {
+				robots.addAll(edge.getRobotsQueue());
+			}
 		}
 		return robots.toArray(new Robot[robots.size()]);
 	}

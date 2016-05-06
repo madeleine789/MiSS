@@ -82,6 +82,12 @@ public class SampleDoorEdge implements DoorEdge {
 		for (Float i : intruderQueue) {
 			sb.append(i+", ");
 		}
+		sb.append(" ** ");
+		for (Robot r : robotsQueue) {
+			sb.append(r == null ? "null" : "robot");
+			sb.append(", ");
+		}
+		sb.append(" ( "+getLength()+" ) ");
 		sb.append("\n");
 		return sb.toString();
 	}

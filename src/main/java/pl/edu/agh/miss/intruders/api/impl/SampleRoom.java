@@ -27,8 +27,9 @@ public class SampleRoom implements Room{
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append("$$$$$\n");
 		for (DoorNode node : doorNodes) {
-			sb.append(node.getName());
+			sb.append(node.getName()+" ");
 		}
 		return sb.toString();
 	}

@@ -36,8 +36,14 @@ public class SampleRobotsController implements RobotsController {
 			}
 			Random rand = new Random();
 			for (Robot robot : robotsByTheDoor) {
-				int edgeNumber = rand.nextInt(edges.size());
-				edges.get(edgeNumber).getRobotsQueue().add(robot);
+				List<DoorEdge> outEdges= new LinkedList<>();
+				for (DoorEdge edge : node.getEdges()) {
+					if (edge.getSource().equals(node)) {
+						outEdges.add(edge);
+					}
+				}
+				int edgeNumber = rand.nextInt(outEdges.size());
+				outEdges.get(edgeNumber).getRobotsQueue().add(robot);
 			}
 		}
 	}
@@ -54,6 +60,7 @@ public class SampleRobotsController implements RobotsController {
 							edge.getIntruderQueue().forEach(prob->newIntruderProb.add(config.getNewProbability(prob, robot)));
 							edge.setIntrudersQueue(newIntruderProb);
 						}
+						nodeToUpdate.setProbability(config.getNewProbability(nodeToUpdate.getProbability(), robot));
 					}
 				}
 			}

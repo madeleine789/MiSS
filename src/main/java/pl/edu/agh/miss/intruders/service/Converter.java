@@ -64,7 +64,7 @@ public class Converter {
 
         building.getSpaces().values().stream().forEach(node -> {
             Room room = new SampleRoom();
-            node.getIncidentNodes().stream().filter(n -> building.isGate(node.getNodeId())).forEach(n -> room.addNode
+            node.getIncidentNodes().stream().filter(n -> building.isGate(n.getNodeId())).forEach(n -> room.addNode
                     (doors.get(n.getNodeId()
             )));
 
@@ -78,6 +78,9 @@ public class Converter {
                         Queue<Robot> q = new LinkedList<>();
                         if (node.isRobotThere()) {
                         	q.add(new SampleRobot());
+                        }
+                        while (q.size()<e.getLength()) {
+                        	q.add(null);
                         }
                         e.setRobotsQueue(q);
                     }));
