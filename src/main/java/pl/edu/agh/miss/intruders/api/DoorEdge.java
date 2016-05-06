@@ -42,10 +42,4 @@ public interface DoorEdge {
 	Queue<Robot> getRobotsQueue();
 	
 	void setRobotsQueue(Queue<Robot> queue);
-
-	/** Get the probability of the intruder moving through this edge. */
-	float getProbability();
-
-	/** Set the probability of the intruder moving through this edge. */
-	void setProbability(float weight);
 }

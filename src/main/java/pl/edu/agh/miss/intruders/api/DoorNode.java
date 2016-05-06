@@ -53,24 +53,6 @@ public interface DoorNode {
 	
 	void setTheOtherSide(DoorNode node);
 
-	/** Get the probability of the intruder passing through the door. */
-	float getPassThroughProbability();
-
-	/** Set the probability of the intruder passing through the door. */
-	void setPassThroughProbability(float weight);
-
-	/**
-	 * Get the probability of the intruder staying in place for the next time
-	 * tick.
-	 */
-	float getStayProbability();
-
-	/**
-	 * Set the probability of the intruder staying in place for the next time
-	 * tick.
-	 */
-	void setStayProbability(float weight);
-
 	/** Move a robot to through an edge. */
 	void move(Robot robot, DoorEdge edge);
 

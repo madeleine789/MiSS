@@ -15,10 +15,6 @@ public class SampleDoorNode implements DoorNode {
 	
 	float probability;
 	
-	float stayProbability;
-	
-	float passThroughProbability;
-	
 	private DoorNode otherSide;
 	
 	private String name;
@@ -63,25 +59,6 @@ public class SampleDoorNode implements DoorNode {
 		return otherSide;
 	}
 
-	@Override
-	public float getPassThroughProbability() {
-		return passThroughProbability;
-	}
-
-	@Override
-	public void setPassThroughProbability(float weight) {
-		this.passThroughProbability = weight;
-	}
-
-	@Override
-	public float getStayProbability() {
-		return stayProbability;
-	}
-
-	@Override
-	public void setStayProbability(float weight) {
-		this.stayProbability = weight;
-	}
 
 	@Override
 	public List<DoorEdge> getEdges() {

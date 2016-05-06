@@ -15,8 +15,6 @@ public class SampleDoorEdge implements DoorEdge {
 	
 	private int length;
 	
-	private float probability;
-	
 	private Queue<Float> intruderQueue;
 	
 	private Queue<Robot> robotsQueue;
@@ -60,16 +58,6 @@ public class SampleDoorEdge implements DoorEdge {
 	@Override
 	public Queue<Float> getIntruderQueue() {
 		return intruderQueue;
-	}
-
-	@Override
-	public float getProbability() {
-		return probability;
-	}
-
-	@Override
-	public void setProbability(float weight) {
-		this.probability = weight;
 	}
 
 	@Override

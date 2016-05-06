@@ -39,8 +39,6 @@ public class Converter {
 
             startEnd.setLength((int) (edge.getCost() * 10));
             endStart.setLength((int) (edge.getCost() * 10));
-            startEnd.setProbability(1f);
-            endStart.setProbability(1f);
             startEnd.setDestination(end);
             startEnd.setSource(start);
             endStart.setDestination(start);
@@ -56,8 +54,6 @@ public class Converter {
 
             start.setName(edge.getNodeFromId());
             start.setProbability(building.getNode(edge.getNodeFromId()).getProbability());
-            start.setStayProbability(1f);
-            start.setPassThroughProbability(1f);
             end.setName(edge.getNodeToId());
             end.setProbability(building.getNode(edge.getNodeToId()).getProbability());
             end.setTheOtherSide(start);
