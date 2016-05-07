@@ -22,13 +22,16 @@ public class Simulator {
 
 	private Converter converter;
 
+	private int timeUnits = 5;
+
 	public Simulator(IntruderController intruderController, RobotsController robotsController, Config config,
-					 Building building, Converter converter) {
+					 Building building, Converter converter, int timeUnits) {
 		this.intruderController = intruderController;
 		this.robotsController = robotsController;
 		this.config = config;
 		this.building = building;
 		this.converter = converter;
+		this.timeUnits = timeUnits;
 	}
 
 	public void simulate() {
@@ -39,7 +42,7 @@ public class Simulator {
 		Graph graph = graphView.generate(rosonBuilding);
 		intruderController.init(building.getDoorNodes());
 		robotsController.init(building.getDoorNodes(), building.getRooms());
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < timeUnits; i++) {
 			intruderController.update();
 			robotsController.update();
 			robotsController.reduceProbabilities(config);

@@ -97,15 +97,13 @@ public class Converter {
                     .filter(n -> this.rosonBuilding.isSpace(n.getNodeId()))
                     .forEach(n -> n.setProbability(probability));
             this.rosonBuilding.getNode(node.getName()).setProbability(probability);
-            //System.out.println(this.rosonBuilding.getNode(node.getName()).getProbability() + " " + probability);
         });
         return this.rosonBuilding;
     };
 
     private static Queue<Float> generateQueue(int size) {
         Queue<Float> iq = new LinkedList<>();
-//        Random random = new Random();
-        for (int i=0; i < size; i++){
+        for (int i=0; i < size; i++) {
             iq.add(0f);
         }
         return iq;

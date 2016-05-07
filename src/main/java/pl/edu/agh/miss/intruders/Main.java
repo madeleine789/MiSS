@@ -16,10 +16,13 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		File file;
-		if (args.length < 2){
+		int timeUnits;
+		if (args.length < 3){
 			file = new File(Main.class.getClassLoader().getResource("roson/straight.roson").getFile());
+			timeUnits = 5;
 		} else {
 			file = new File(args[1]);
+			timeUnits = Integer.parseInt(args[2]);
 		}
 
 		RosonBuilding b = IOService.importFromJson(file);
@@ -29,7 +32,7 @@ public class Main {
         IntruderController ic = new SampleIntruderController();
 		RobotsController rc = new SampleRobotsController();
         Config config = new SampleConfig();
-		Simulator s = new Simulator(ic, rc, config, building, converter);
+		Simulator s = new Simulator(ic, rc, config, building, converter, timeUnits);
 		s.simulate();
 	}
 }
