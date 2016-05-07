@@ -6,6 +6,8 @@ import pl.edu.agh.miss.intruders.model.RosonBuilding;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.StreamSupport;
 
 public class Converter {
     private RosonBuilding rosonBuilding;
@@ -101,8 +103,11 @@ public class Converter {
             this.rosonBuilding.getEdges().forEach( edge -> {
                 if (node.getRobots().length > 0 && (Objects.equals(edge.getNodeFromId(), node.getName()) || Objects
                         .equals(edge.getNodeToId(), node.getName()))) {
-                    Robot r  = node.getRobots()[0];
-                    if (r == null) {
+                    boolean onlyNullRobots = true;
+                    for (Robot r: node.getRobots()) {
+                        if (r != null) onlyNullRobots = false;
+                    }
+                    if (onlyNullRobots) {
                         edge.setHasRobot(false);
                         rosonBuilding.getNode(node.getName()).isRobotThere(false);
                     } else {
