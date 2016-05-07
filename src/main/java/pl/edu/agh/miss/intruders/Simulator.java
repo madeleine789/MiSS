@@ -5,6 +5,7 @@ import pl.edu.agh.miss.intruders.api.Building;
 import pl.edu.agh.miss.intruders.api.Config;
 import pl.edu.agh.miss.intruders.api.intruder.IntruderController;
 import pl.edu.agh.miss.intruders.api.robots.RobotsController;
+import pl.edu.agh.miss.intruders.model.Edge;
 import pl.edu.agh.miss.intruders.model.RosonBuilding;
 import pl.edu.agh.miss.intruders.service.Converter;
 import pl.edu.agh.miss.intruders.service.GraphView;
@@ -68,7 +69,22 @@ public class Simulator {
 			double probability = rosonBuilding.getNode(id).getProbability();
 			String color = ColorUtils.getRGBString(ColorUtils.probabilityToColor(probability));
 			node.setAttribute("ui.style", "fill-color:  " + color + ";");
-			//System.out.println(id + " " + probability + " " + color);
+			if (rosonBuilding.getNode(id).isRobotThere()) {
+				if(rosonBuilding.isGate(id))
+				node.addAttribute("ui.style", "icon: url('./src/main/resources/robot.png'); icon-mode: at-left; ");
+				else rosonBuilding.getNode(id).isRobotThere(false);
+			} else {
+				node.addAttribute("ui.style", "icon: url('./src/main/resources/empty.png'); icon-mode: at-left; ");
+			}
+		}
+
+		for (org.graphstream.graph.Edge edge : graph.getEachEdge()) {
+			Edge e = rosonBuilding.getEdge(edge.getAttribute("id"));
+			if (e.hasRobot()) {
+				edge.addAttribute("ui.style", "fill-color: rgb(255,0,0);");
+			} else {
+				edge.addAttribute("ui.style", "fill-color: rgb(0,0,0);");
+			}
 		}
 	}
 

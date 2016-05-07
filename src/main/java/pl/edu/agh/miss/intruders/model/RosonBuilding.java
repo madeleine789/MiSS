@@ -53,6 +53,12 @@ public class RosonBuilding {
         else spaces.remove(id);
     }
 
+    public Edge getEdge(String repr) {
+        Optional<Edge> any = getEdges().stream().filter(edge -> Objects.equals(edge.toString(), repr)).findAny();
+        if (any.isPresent()) return any.get();
+        return null;
+    }
+
     public boolean needsAutomaticLayout() {
         return automaticLayout;
     }

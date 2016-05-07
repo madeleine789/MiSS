@@ -1786,8 +1786,25 @@
       "nodeId": "Node147"
     }
   ],
-  "space-robots": [],
-  "space-victims": [],
+  "space-robots": [
+    {
+      "type": "space-robot",
+      "spaceId": "Space72",
+      "robotId": "Robot148"
+    },
+    {
+      "type": "space-robot",
+      "spaceId": "Space50",
+      "robotId": "Robot149"
+    }
+  ],
+  "space-victims": [
+  {
+    "type": "space-victim",
+    "spaceId": "Space38",
+    "robotId": "Victim1"
+  }
+  ],
   "gate-nodes": [
     {
       "type": "gate-node",

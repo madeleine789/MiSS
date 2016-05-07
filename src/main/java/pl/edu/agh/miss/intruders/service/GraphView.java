@@ -42,6 +42,7 @@ public class GraphView {
                 e.addAttribute("ui.label", String.valueOf(edge.getCost()));
                 e.addAttribute("ui.style", "text-alignment: under;");
             }
+            e.addAttribute("id", edge.toString());
             i++;
         }
 

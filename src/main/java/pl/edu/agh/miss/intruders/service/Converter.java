@@ -97,6 +97,20 @@ public class Converter {
                     .filter(n -> this.rosonBuilding.isSpace(n.getNodeId()))
                     .forEach(n -> n.setProbability(probability));
             this.rosonBuilding.getNode(node.getName()).setProbability(probability);
+
+            this.rosonBuilding.getEdges().forEach( edge -> {
+                if (node.getRobots().length > 0 && (Objects.equals(edge.getNodeFromId(), node.getName()) || Objects
+                        .equals(edge.getNodeToId(), node.getName()))) {
+                    Robot r  = node.getRobots()[0];
+                    if (r == null) {
+                        edge.setHasRobot(false);
+                        rosonBuilding.getNode(node.getName()).isRobotThere(false);
+                    } else {
+                        edge.setHasRobot(true);
+                        rosonBuilding.getNode(node.getName()).isRobotThere(true);
+                    }
+                }
+            });
         });
         return this.rosonBuilding;
     };

@@ -18,8 +18,8 @@ public class Main {
 		File file;
 		int timeUnits;
 		if (args.length < 3){
-			file = new File(Main.class.getClassLoader().getResource("roson/straight.roson").getFile());
-			timeUnits = 5;
+			file = new File(Main.class.getClassLoader().getResource("roson/maze.roson").getFile());
+			timeUnits = 15;
 		} else {
 			file = new File(args[1]);
 			timeUnits = Integer.parseInt(args[2]);
