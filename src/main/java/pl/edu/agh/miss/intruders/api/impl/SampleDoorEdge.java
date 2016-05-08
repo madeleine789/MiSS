@@ -19,7 +19,9 @@ public class SampleDoorEdge implements DoorEdge {
 	
 	private Queue<Robot> robotsQueue;
 	
-	public SampleDoorEdge() {
+	public SampleDoorEdge(DoorNode src, DoorNode dest) {
+		source = src;
+		destination = dest;
 		intruderQueue = new LinkedList<>();
 	}
 

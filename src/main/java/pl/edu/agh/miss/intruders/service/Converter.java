@@ -2,12 +2,11 @@ package pl.edu.agh.miss.intruders.service;
 
 import pl.edu.agh.miss.intruders.api.*;
 import pl.edu.agh.miss.intruders.api.impl.*;
+import pl.edu.agh.miss.intruders.model.Node;
 import pl.edu.agh.miss.intruders.model.RosonBuilding;
 
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collector;
-import java.util.stream.StreamSupport;
 
 public class Converter {
     private RosonBuilding rosonBuilding;
@@ -36,8 +35,8 @@ public class Converter {
 
             DoorNode start = new SampleDoorNode();
             DoorNode end = new SampleDoorNode();
-            DoorEdge startEnd = new SampleDoorEdge();
-            DoorEdge endStart = new SampleDoorEdge();
+            DoorEdge startEnd = new SampleDoorEdge(start, end);
+            DoorEdge endStart = new SampleDoorEdge(end, start);
 
             startEnd.setLength((int) (edge.getCost() * 10));
             endStart.setLength((int) (edge.getCost() * 10));
@@ -69,7 +68,7 @@ public class Converter {
             node.getIncidentNodes().stream().filter(n -> building.isGate(n.getNodeId())).forEach(n -> room.addNode
                     (doors.get(n.getNodeId()
             )));
-
+            node.getIncidentNodes().stream().forEach(gate -> addBidirectionalEdges(gate, node.getIncidentNodes(), doors));
             node.getIncidentNodes().stream()
                     .filter(n -> doors.get(n.getNodeId()) != null)
                     .forEach(n -> doors.get(n
@@ -91,6 +90,21 @@ public class Converter {
         doorNodes.addAll(doors.values());
         return new SampleBuilding(rooms, doorNodes);
     };
+
+    private void addBidirectionalEdges(Node gate, Set<Node> incidentNodes, Map<String, DoorNode> doors) {
+        DoorNode door = doors.get(gate.getNodeId());
+        incidentNodes.stream().filter(node -> !Objects.equals(node.getNodeId(), gate.getNodeId())).forEach(node -> {
+            DoorNode other = doors.getOrDefault(node.getNodeId(), null);
+            if (other != null) {
+                gate.getIncidentNodes().add(rosonBuilding.getNode(other.getName()));
+                DoorEdge startEnd = new SampleDoorEdge(door, other);
+                startEnd.setLength(1);
+                door.addEdge(startEnd);
+                other.addEdge(startEnd);
+                startEnd.setIntrudersQueue(generateQueue(startEnd.getLength()));
+            }
+        });
+    }
 
     private Function<Building, RosonBuilding> simulationToRosonConverter = building -> {
         building.getDoorNodes().forEach(node -> {
