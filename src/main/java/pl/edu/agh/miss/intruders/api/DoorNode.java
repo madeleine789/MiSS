@@ -52,6 +52,10 @@ public interface DoorNode {
 	DoorNode getTheOtherSide();
 	
 	void setTheOtherSide(DoorNode node);
+	
+	List<Robot> getRobotsFromTheOtherSide();
+	
+	void setRobotsFromTheOtherSide(List<Robot> robotsFromTheOtherSide);
 
 	/** Move a robot to through an edge. */
 	void move(Robot robot, DoorEdge edge);

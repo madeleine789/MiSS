@@ -1,7 +1,9 @@
 package pl.edu.agh.miss.intruders.api.impl;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 import pl.edu.agh.miss.intruders.api.DoorEdge;
 import pl.edu.agh.miss.intruders.api.DoorNode;
@@ -17,7 +19,7 @@ public class SampleDoorEdge implements DoorEdge {
 	
 	private Queue<Float> intruderQueue;
 	
-	private Queue<Robot> robotsQueue;
+	private Queue<List<Robot>> robotsQueue;
 	
 	public SampleDoorEdge(DoorNode src, DoorNode dest) {
 		source = src;
@@ -63,7 +65,7 @@ public class SampleDoorEdge implements DoorEdge {
 	}
 
 	@Override
-	public Queue<Robot> getRobotsQueue() {
+	public Queue<List<Robot>> getRobotsQueue() {
 		return robotsQueue;
 	}
 
@@ -73,7 +75,7 @@ public class SampleDoorEdge implements DoorEdge {
 	}
 
 	@Override
-	public void setRobotsQueue(Queue<Robot> queue) {
+	public void setRobotsQueue(Queue<List<Robot>> queue) {
 		this.robotsQueue = queue;
 	}
 
@@ -85,9 +87,12 @@ public class SampleDoorEdge implements DoorEdge {
 			sb.append(i+", ");
 		}
 		sb.append(" ** ");
-		for (Robot r : robotsQueue) {
-			sb.append(r == null ? "null" : "robot");
-			sb.append(", ");
+		for (List<Robot> s : robotsQueue) {
+			for (Robot r : s) {
+				sb.append(r == null ? "null" : "robot");
+				sb.append(", ");
+			}
+			sb.append(" | ");
 		}
 		sb.append(" ( "+getLength()+" ) ");
 		sb.append("\n");

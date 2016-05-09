@@ -1,5 +1,6 @@
 package pl.edu.agh.miss.intruders.api;
 
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -39,7 +40,7 @@ public interface DoorEdge {
 	
 	void setIntrudersQueue(Queue<Float> queue);
 	
-	Queue<Robot> getRobotsQueue();
+	Queue<List<Robot>> getRobotsQueue();
 	
-	void setRobotsQueue(Queue<Robot> queue);
+	void setRobotsQueue(Queue<List<Robot>> queue);
 }

@@ -76,12 +76,15 @@ public class Converter {
                     .getEdges()
                     .stream()
                     .forEach(e -> {
-                        Queue<Robot> q = new LinkedList<>();
+                        Queue<List<Robot>> q = new LinkedList<>();
+                        List<Robot> l = new LinkedList<>();
                         if (node.isRobotThere()) {
-                        	q.add(new SampleRobot());
+                        	l.add(new SampleRobot());
+                        	node.isRobotThere(false);
                         }
+                        q.add(l);
                         while (q.size()<e.getLength()) {
-                        	q.add(null);
+                        	q.add(new LinkedList<>());
                         }
                         e.setRobotsQueue(q);
                     }));

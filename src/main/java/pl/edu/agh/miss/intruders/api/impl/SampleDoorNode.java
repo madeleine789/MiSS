@@ -19,8 +19,11 @@ public class SampleDoorNode implements DoorNode {
 	
 	private String name;
 	
+	private List<Robot> robotsFromTheOtherSide;
+	
 	public SampleDoorNode() {
 		edges = new LinkedList<>();
+		robotsFromTheOtherSide = new LinkedList<>();
 	}
 
 	@Override
@@ -50,9 +53,12 @@ public class SampleDoorNode implements DoorNode {
 		List<Robot> robots = new LinkedList<>();
 		for (DoorEdge edge : getEdges()) {
 			if (edge.getSource().equals(this)) {
-				robots.addAll(edge.getRobotsQueue());
+				for (List<Robot> rs : edge.getRobotsQueue()) {
+					robots.addAll(rs);
+				}
 			}
 		}
+		robots.addAll(robotsFromTheOtherSide);
 		return robots.toArray(new Robot[robots.size()]);
 	}
 
@@ -115,6 +121,16 @@ public class SampleDoorNode implements DoorNode {
 	@Override
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public List<Robot> getRobotsFromTheOtherSide() {
+		return robotsFromTheOtherSide;
+	}
+
+	@Override
+	public void setRobotsFromTheOtherSide(List<Robot> robotsFromTheOtherSide) {
+		this.robotsFromTheOtherSide = robotsFromTheOtherSide;
 	}
 
 }
