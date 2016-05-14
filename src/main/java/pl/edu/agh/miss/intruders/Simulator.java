@@ -38,12 +38,13 @@ public class Simulator {
 	public void simulate() {
 
 		GraphView graphView = new GraphView().withMergedEdges(false).withNodeLabels(true).withEdgeLabels(false)
-               .withRobots(true);
+               .withRobots(true).withScreenshots(false);
 		RosonBuilding rosonBuilding = converter.simulationToRoson(building);
 		Graph graph = graphView.generate(rosonBuilding);
 		intruderController.init(building.getDoorNodes());
 		robotsController.init(building.getDoorNodes(), building.getRooms());
 		for (int i = 0; i < timeUnits; i++) {
+			if (graphView.screenshots) graphView.makeScreenShot(graph, "images/img_" + i + ".png");
 			intruderController.update();
 			robotsController.update();
 			robotsController.reduceProbabilities(config);
@@ -52,6 +53,7 @@ public class Simulator {
 			updateGraph(graph);
 			sleep();
 		}
+		System.exit(0);
 	}
 
 	private void sleep() {
@@ -66,9 +68,14 @@ public class Simulator {
 		RosonBuilding rosonBuilding = converter.simulationToRoson(building);
 		for (org.graphstream.graph.Node node : graph) {
 			String id = "Node" + node.getId().substring(0, node.getId().indexOf(" "));
-			double probability = rosonBuilding.getNode(id).getProbability();
-			String color = ColorUtils.getRGBString(ColorUtils.probabilityToColor(probability));
-			node.setAttribute("ui.style", "fill-color:  " + color + ";");
+			if (rosonBuilding.isGate(id)) {
+				double probability = rosonBuilding.getNode(id).getProbability();
+				String color = ColorUtils.getRGBString(ColorUtils.probabilityToColor(probability));
+				node.setAttribute("ui.style", "fill-color:  " + color + ";");
+				String label = String.valueOf(probability).length() < 5 ? String.valueOf(probability) : String.valueOf
+						(probability).substring(0, 5);
+				node.addAttribute("ui.label", label);
+			}
 			if (rosonBuilding.getNode(id).isRobotThere()) {
 				if(rosonBuilding.isGate(id))
 				node.addAttribute("ui.style", "icon: url('./src/main/resources/robot.png'); icon-mode: at-left; ");

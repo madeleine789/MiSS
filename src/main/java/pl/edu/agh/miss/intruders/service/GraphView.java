@@ -3,11 +3,14 @@ package pl.edu.agh.miss.intruders.service;
 
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.MultiGraph;
+import org.graphstream.stream.file.FileSinkImages;
 import org.graphstream.ui.view.Viewer;
 import pl.edu.agh.miss.intruders.model.RosonBuilding;
 import pl.edu.agh.miss.intruders.model.Edge;
 import pl.edu.agh.miss.intruders.model.Node;
 import pl.edu.agh.miss.intruders.service.utils.ColorUtils;
+
+import java.io.IOException;
 
 public class GraphView {
 
@@ -15,6 +18,8 @@ public class GraphView {
     private boolean nodeLabels = false;
     private boolean edgeLabels = false;
     private boolean robots = false;
+    public boolean screenshots = false;
+    private FileSinkImages fsi;
 
     public Graph generate(RosonBuilding building) {
         if(!mergedEdges)
@@ -53,27 +58,35 @@ public class GraphView {
                 node.setAttribute("x", n.getX());
                 node.setAttribute("y", n.getY());
             }
-            String color = ColorUtils.getRGBString(ColorUtils.probabilityToColor(n.getProbability
-                    ()));
-
             node.addAttribute("ui.style", "stroke-mode: plain; stroke-color: rgb(0,0,0);");
-            node.addAttribute("ui.style", "fill-color:  " + color + ";");
 
             if (building.isSpace(id)) {
                 node.addAttribute("ui.style", "shape : box; size: 15px, 15px;");
+                node.addAttribute("ui.style", "fill-color:  black;");
                 if (robots && n.isRobotThere()) {
                     node.addAttribute("ui.style", "icon: url('./src/main/resources/robot.png'); icon-mode: at-left; ");
                 }
             } else if (building.isGate(id)) {
+                String color = ColorUtils.getRGBString(ColorUtils.probabilityToColor(n.getProbability()));
+                node.addAttribute("ui.style", "fill-color:  " + color + ";");
                 node.addAttribute("ui.style", "shape : diamond; size: 15px, 15px;");
             }
 
             if (nodeLabels) {
-                node.addAttribute("ui.label", node.getId());
+                node.addAttribute("ui.label", id);
                 node.addAttribute("ui.style", "text-alignment: under;");
             }
         }
+        fsi = new FileSinkImages(FileSinkImages.OutputType.PNG,FileSinkImages.Resolutions.HD720);
+        graph.addSink(fsi);
+        fsi.setQuality(FileSinkImages.Quality.HIGH);
         return graph;
+    }
+
+    public void makeScreenShot(Graph g, String img) {
+        try {
+            fsi.writeAll(g, img);
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
     public GraphView withMergedEdges(boolean value) {
@@ -93,6 +106,11 @@ public class GraphView {
 
     public GraphView withRobots(boolean value) {
         this.robots = value;
+        return this;
+    }
+
+    public GraphView withScreenshots(boolean value) {
+        this.screenshots = value;
         return this;
     }
 }

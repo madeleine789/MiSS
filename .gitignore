@@ -17,3 +17,6 @@ target/
 
 *.class
 out/
+
+*.png
+*.mpeg
