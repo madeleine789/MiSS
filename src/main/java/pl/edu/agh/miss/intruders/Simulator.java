@@ -24,21 +24,20 @@ public class Simulator {
 	private Converter converter;
 
 	private int timeUnits = 5;
+	private GraphView graphView;
 
 	public Simulator(IntruderController intruderController, RobotsController robotsController, Config config,
-					 Building building, Converter converter, int timeUnits) {
+					 Building building, Converter converter, int timeUnits, GraphView view) {
 		this.intruderController = intruderController;
 		this.robotsController = robotsController;
 		this.config = config;
 		this.building = building;
 		this.converter = converter;
 		this.timeUnits = timeUnits;
+		this.graphView = view;
 	}
 
 	public void simulate() {
-
-		GraphView graphView = new GraphView().withMergedEdges(false).withNodeLabels(true).withEdgeLabels(false)
-               .withRobots(true).withScreenshots(false);
 		RosonBuilding rosonBuilding = converter.simulationToRoson(building);
 		Graph graph = graphView.generate(rosonBuilding);
 		intruderController.init(building.getDoorNodes());
@@ -75,6 +74,7 @@ public class Simulator {
 				String label = String.valueOf(probability).length() < 5 ? String.valueOf(probability) : String.valueOf
 						(probability).substring(0, 5);
 				node.addAttribute("ui.label", label);
+				node.addAttribute("ui.style", "text-alignment: under;");
 			}
 			if (rosonBuilding.getNode(id).isRobotThere()) {
 				if(rosonBuilding.isGate(id))
