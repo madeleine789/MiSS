@@ -19,7 +19,8 @@ public class Main {
 
 		Options options = new Options();
 		options.addOption("file", true, "path to roson file");
-		options.addOption("times", true, "length of simulation in time units");
+		options.addOption("iterations", true, "length of simulation in iterations");
+		options.addOption("times", true, "time units per iteration");
 		options.addOption("merged", false, "merge edges on visualization");
 		options.addOption("labels", true, "show labels under nodes");
 		options.addOption("robots", false, "show robots on visualization");
@@ -41,6 +42,13 @@ public class Main {
 		} else {
 			timeUnits = Integer.parseInt(times);
 		}
+		String iter = cmd.getOptionValue("iterations");
+		int iterations;
+		if (iter == null){
+			iterations = 5;
+		} else {
+			iterations = Integer.parseInt(iter);
+		}
 
 		boolean labels, edges, robots, screenshots;
 		labels = cmd.hasOption("labels");
@@ -57,7 +65,7 @@ public class Main {
         IntruderController ic = new SampleIntruderController();
 		RobotsController rc = new SampleRobotsController();
         Config config = new SampleConfig();
-		Simulator s = new Simulator(ic, rc, config, building, converter, timeUnits, graphView);
+		Simulator s = new Simulator(ic, rc, config, building, converter, iterations, timeUnits, graphView);
 		s.simulate();
 	}
 }

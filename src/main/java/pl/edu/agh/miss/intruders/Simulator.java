@@ -24,10 +24,11 @@ public class Simulator {
 	private Converter converter;
 
 	private int timeUnits = 5;
+	private int iterations = 1;
 	private GraphView graphView;
 
 	public Simulator(IntruderController intruderController, RobotsController robotsController, Config config,
-					 Building building, Converter converter, int timeUnits, GraphView view) {
+					 Building building, Converter converter, int iterations, int timeUnits, GraphView view) {
 		this.intruderController = intruderController;
 		this.robotsController = robotsController;
 		this.config = config;
@@ -35,6 +36,7 @@ public class Simulator {
 		this.converter = converter;
 		this.timeUnits = timeUnits;
 		this.graphView = view;
+		this.iterations = iterations;
 	}
 
 	public void simulate() {
@@ -42,11 +44,13 @@ public class Simulator {
 		Graph graph = graphView.generate(rosonBuilding);
 		intruderController.init(building.getDoorNodes());
 		robotsController.init(building.getDoorNodes(), building.getRooms());
-		for (int i = 0; i < timeUnits; i++) {
-			if (graphView.screenshots) graphView.makeScreenShot(graph, "images/img_" + i + ".png");
-			intruderController.update();
-			robotsController.update();
-			robotsController.reduceProbabilities(config);
+		for (int j = 0; j < iterations; j++) {
+			for (int i = 0; i < timeUnits; i++) {
+				if (graphView.screenshots) graphView.makeScreenShot(graph, "images/img_" + i + ".png");
+				intruderController.update();
+				robotsController.update();
+				robotsController.reduceProbabilities(config);
+			}
 			System.out.println("###");
 			building.getDoorNodes().forEach(System.out::println);
 			updateGraph(graph);
@@ -57,7 +61,7 @@ public class Simulator {
 
 	private void sleep() {
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
