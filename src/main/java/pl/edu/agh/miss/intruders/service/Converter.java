@@ -96,6 +96,7 @@ public class Converter {
 
     private void addBidirectionalEdges(Node gate, Set<Node> incidentNodes, Map<String, DoorNode> doors) {
         DoorNode door = doors.get(gate.getNodeId());
+        if (door == null) return;
         incidentNodes.stream().filter(node -> !Objects.equals(node.getNodeId(), gate.getNodeId())).forEach(node -> {
             DoorNode other = doors.getOrDefault(node.getNodeId(), null);
             if (other != null) {

@@ -22,16 +22,17 @@ public class Main {
 		options.addOption("iterations", true, "length of simulation in iterations");
 		options.addOption("times", true, "time units per iteration");
 		options.addOption("merged", false, "merge edges on visualization");
-		options.addOption("labels", true, "show labels under nodes");
+		options.addOption("labels", false, "show labels under nodes");
 		options.addOption("robots", false, "show robots on visualization");
 		options.addOption("screenshots", false, "save screenshot after every step");
+		options.addOption("v", false, "show building graph with no simulation");
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd = parser.parse( options, args);
 		String path = cmd.getOptionValue("file");
 		File file;
 		if (path == null) {
-			file = new File(Main.class.getClassLoader().getResource("roson/straight.roson").getFile());
+			file = new File(Main.class.getClassLoader().getResource("roson/bigger.roson").getFile());
 		} else {
 			file = new File(Main.class.getClassLoader().getResource(path).getFile());
 		}
@@ -58,14 +59,17 @@ public class Main {
 
 		RosonBuilding b = IOService.importFromJson(file);
 		Converter converter = new Converter(b);
-        Building building = converter.rosonToSimulation();
 		GraphView graphView = new GraphView().withMergedEdges(edges)
 				.withNodeLabels(labels).withRobots(robots).withScreenshots(screenshots);
-
-        IntruderController ic = new SampleIntruderController();
-		RobotsController rc = new SampleRobotsController();
-        Config config = new SampleConfig();
-		Simulator s = new Simulator(ic, rc, config, building, converter, iterations, timeUnits, graphView);
-		s.simulate();
+		if (cmd.hasOption("v")) {
+			graphView.generate(b).display();
+		} else {
+			Building building = converter.rosonToSimulation();
+			IntruderController ic = new SampleIntruderController();
+			RobotsController rc = new SampleRobotsController();
+			Config config = new SampleConfig();
+			Simulator s = new Simulator(ic, rc, config, building, converter, iterations, timeUnits, graphView);
+			s.simulate();
+		}
 	}
 }
