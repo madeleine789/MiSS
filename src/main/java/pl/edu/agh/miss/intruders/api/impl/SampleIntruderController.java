@@ -22,7 +22,7 @@ public class SampleIntruderController implements IntruderController {
 	public void init(List<DoorNode> doorNodes) {
 		this.doorNodes = doorNodes;
 		for (DoorNode node : doorNodes) {
-			float edgeProb = 2.0f/(node.getEdges().size()+2);
+			float edgeProb = 1.0f/(node.getEdges().size()+2);
 			for (DoorEdge edge : node.getEdges()) {
 				edgesProb.put(edge, edgeProb);
 			}

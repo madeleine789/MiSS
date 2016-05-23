@@ -81,6 +81,7 @@ public class Converter {
                         if (node.isRobotThere()) {
                         	l.add(new SampleRobot());
                         	node.isRobotThere(false);
+                        	System.out.println(node);
                         }
                         q.add(l);
                         while (q.size()<e.getLength()) {
@@ -119,7 +120,7 @@ public class Converter {
             this.rosonBuilding.getNode(node.getName()).setProbability(probability);
 
             this.rosonBuilding.getEdges().forEach( edge -> {
-                if (node.getRobots().length > 0 && (Objects.equals(edge.getNodeFromId(), node.getName()) || Objects
+                if (/* node.getRobots().length > 0 && */(Objects.equals(edge.getNodeFromId(), node.getName()) || Objects
                         .equals(edge.getNodeToId(), node.getName()))) {
                     boolean onlyNullRobots = true;
                     for (Robot r: node.getRobots()) {

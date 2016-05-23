@@ -1,6 +1,9 @@
 package pl.edu.agh.miss.intruders;
 
+import java.io.IOException;
+
 import org.graphstream.graph.Graph;
+
 import pl.edu.agh.miss.intruders.api.Building;
 import pl.edu.agh.miss.intruders.api.Config;
 import pl.edu.agh.miss.intruders.api.intruder.IntruderController;
@@ -10,6 +13,7 @@ import pl.edu.agh.miss.intruders.model.RosonBuilding;
 import pl.edu.agh.miss.intruders.service.Converter;
 import pl.edu.agh.miss.intruders.service.GraphView;
 import pl.edu.agh.miss.intruders.service.utils.ColorUtils;
+import pl.edu.agh.miss.measure.Measurer;
 
 public class Simulator {
 
@@ -22,13 +26,17 @@ public class Simulator {
 	private Building building;
 
 	private Converter converter;
+	
+	private Measurer measurer;
 
 	private int timeUnits = 5;
+
 	private int iterations = 1;
+	
 	private GraphView graphView;
 
 	public Simulator(IntruderController intruderController, RobotsController robotsController, Config config,
-					 Building building, Converter converter, int iterations, int timeUnits, GraphView view) {
+					 Building building, Converter converter, int iterations, int timeUnits, GraphView view, Measurer measurer) {
 		this.intruderController = intruderController;
 		this.robotsController = robotsController;
 		this.config = config;
@@ -37,26 +45,44 @@ public class Simulator {
 		this.timeUnits = timeUnits;
 		this.graphView = view;
 		this.iterations = iterations;
+		this.measurer = measurer;
 	}
 
 	public void simulate() {
+		measurer.addMajorState(building);
 		RosonBuilding rosonBuilding = converter.simulationToRoson(building);
 		Graph graph = graphView.generate(rosonBuilding);
 		intruderController.init(building.getDoorNodes());
 		robotsController.init(building.getDoorNodes(), building.getRooms());
+		printState();
 		for (int j = 0; j < iterations; j++) {
 			for (int i = 0; i < timeUnits; i++) {
-				if (graphView.screenshots) graphView.makeScreenShot(graph, "images/img_" + i + ".png");
+				if (graphView.screenshots) {
+					graphView.makeScreenShot(graph, "images/img_" + i + ".png");
+				}
 				intruderController.update();
 				robotsController.update();
 				robotsController.reduceProbabilities(config);
+				if (i<timeUnits-1) {
+					measurer.addMinorState(building);
+				}
 			}
-			System.out.println("###");
-			building.getDoorNodes().forEach(System.out::println);
+			printState();
 			updateGraph(graph);
+			measurer.addMajorState(building);
 			sleep();
+		}		
+		try {
+			measurer.measure("result/test.txt");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		System.exit(0);
+	}
+
+	private void printState() {
+		System.out.println("###########################################################################################################");
+		building.getDoorNodes().forEach(System.out::println);
 	}
 
 	private void sleep() {

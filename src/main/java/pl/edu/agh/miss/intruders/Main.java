@@ -12,6 +12,7 @@ import pl.edu.agh.miss.intruders.model.RosonBuilding;
 import pl.edu.agh.miss.intruders.service.Converter;
 import pl.edu.agh.miss.intruders.service.GraphView;
 import pl.edu.agh.miss.intruders.service.IOService;
+import pl.edu.agh.miss.measure.Measurer;
 
 public class Main {
 	
@@ -26,13 +27,14 @@ public class Main {
 		options.addOption("robots", false, "show robots on visualization");
 		options.addOption("screenshots", false, "save screenshot after every step");
 		options.addOption("v", false, "show building graph with no simulation");
+		options.addOption("verbosity", true, "verbosity level (0-3)");
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd = parser.parse( options, args);
 		String path = cmd.getOptionValue("file");
 		File file;
 		if (path == null) {
-			file = new File(Main.class.getClassLoader().getResource("roson/bigger.roson").getFile());
+			file = new File(Main.class.getClassLoader().getResource("roson/straight.roson").getFile());
 		} else {
 			file = new File(Main.class.getClassLoader().getResource(path).getFile());
 		}
@@ -49,6 +51,13 @@ public class Main {
 			iterations = 5;
 		} else {
 			iterations = Integer.parseInt(iter);
+		}
+		String verbosityOption = cmd.getOptionValue("verbosity");
+		int verbosity;
+		if (verbosityOption==null) {
+			verbosity = 1;
+		} else {
+			verbosity = Integer.parseInt(verbosityOption);
 		}
 
 		boolean labels, edges, robots, screenshots;
@@ -68,7 +77,8 @@ public class Main {
 			IntruderController ic = new SampleIntruderController();
 			RobotsController rc = new SampleRobotsController();
 			Config config = new SampleConfig();
-			Simulator s = new Simulator(ic, rc, config, building, converter, iterations, timeUnits, graphView);
+			Measurer measurer = new Measurer(verbosity, cmd);
+			Simulator s = new Simulator(ic, rc, config, building, converter, iterations, timeUnits, graphView, measurer);
 			s.simulate();
 		}
 	}
