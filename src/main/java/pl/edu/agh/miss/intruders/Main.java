@@ -27,6 +27,7 @@ public class Main {
 		options.addOption("robots", false, "show robots on visualization");
 		options.addOption("screenshots", false, "save screenshot after every step");
 		options.addOption("v", false, "show building graph with no simulation");
+		options.addOption("s", false, "run simulation without visualization");
 		options.addOption("verbosity", true, "verbosity level (0-3)");
 
 		CommandLineParser parser = new DefaultParser();
@@ -78,7 +79,12 @@ public class Main {
 			RobotsController rc = new SampleRobotsController();
 			Config config = new SampleConfig();
 			Measurer measurer = new Measurer(verbosity, cmd);
-			Simulator s = new Simulator(ic, rc, config, building, converter, iterations, timeUnits, graphView, measurer);
+			Simulator s;
+			if (cmd.hasOption("s")) {
+				s = new Simulator(ic, rc, config, building, converter, iterations, timeUnits, null, measurer);
+			} else {
+				s = new Simulator(ic, rc, config, building, converter, iterations, timeUnits, graphView, measurer);
+			}
 			s.simulate();
 		}
 	}

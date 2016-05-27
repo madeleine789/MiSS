@@ -49,15 +49,18 @@ public class Simulator {
 	}
 
 	public void simulate() {
+		Graph graph = null;
+		if  (graphView != null) {
+			RosonBuilding rosonBuilding = converter.simulationToRoson(building);
+			graph = graphView.generate(rosonBuilding);
+		}
 		measurer.addMajorState(building);
-		RosonBuilding rosonBuilding = converter.simulationToRoson(building);
-		Graph graph = graphView.generate(rosonBuilding);
 		intruderController.init(building.getDoorNodes());
 		robotsController.init(building.getDoorNodes(), building.getRooms());
 		printState();
 		for (int j = 0; j < iterations; j++) {
 			for (int i = 0; i < timeUnits; i++) {
-				if (graphView.screenshots) {
+				if (graph != null && graphView.screenshots) {
 					graphView.makeScreenShot(graph, "images/img_" + i + ".png");
 				}
 				intruderController.update();
@@ -68,7 +71,7 @@ public class Simulator {
 				}
 			}
 			printState();
-			updateGraph(graph);
+			if  (graph != null) updateGraph(graph);
 			measurer.addMajorState(building);
 			sleep();
 		}		
