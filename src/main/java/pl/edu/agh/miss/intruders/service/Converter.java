@@ -65,9 +65,9 @@ public class Converter {
 
         building.getSpaces().values().stream().forEach(node -> {
             Room room = new SampleRoom();
-            node.getIncidentNodes().stream().filter(n -> building.isGate(n.getNodeId())).forEach(n -> room.addNode
-                    (doors.get(n.getNodeId()
-            )));
+            node.getIncidentNodes().stream().filter(n -> building.isGate(n.getNodeId())).forEach(n -> {
+                if (doors.get(n.getNodeId()) != null) room.addNode(doors.get(n.getNodeId()));
+            });
             node.getIncidentNodes().stream().forEach(gate -> addBidirectionalEdges(gate, node.getIncidentNodes(), doors));
             node.getIncidentNodes().stream()
                     .filter(n -> doors.get(n.getNodeId()) != null)
@@ -120,12 +120,9 @@ public class Converter {
             this.rosonBuilding.getNode(node.getName()).setProbability(probability);
 
             this.rosonBuilding.getEdges().forEach( edge -> {
-                if (/* node.getRobots().length > 0 && */(Objects.equals(edge.getNodeFromId(), node.getName()) || Objects
-                        .equals(edge.getNodeToId(), node.getName()))) {
-                    boolean onlyNullRobots = true;
-                    for (Robot r: node.getRobots()) {
-                        if (r != null) onlyNullRobots = false;
-                    }
+                if (Objects.equals(edge.getNodeFromId(), node.getName()) ||
+                        Objects.equals(edge.getNodeToId(), node.getName())) {
+                    boolean onlyNullRobots = Arrays.stream(node.getRobots()).allMatch(r -> r == null);
                     if (onlyNullRobots) {
                         edge.setHasRobot(false);
                         rosonBuilding.getNode(node.getName()).isRobotThere(false);

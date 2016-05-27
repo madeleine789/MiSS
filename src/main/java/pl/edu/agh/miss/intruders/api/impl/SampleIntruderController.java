@@ -36,7 +36,7 @@ public class SampleIntruderController implements IntruderController {
 		for (DoorNode node : doorNodes) {
 			float intruderByTheDoorProb = node.getProbability();
 			for (DoorEdge edge : node.getEdges()) {
-				if (edge.getDestination().equals(node)) {
+				if (edge.getDestination().equals(node) && !edge.getIntruderQueue().isEmpty()) {
 					intruderByTheDoorProb += edge.getIntruderQueue().poll();
 				}
 			}

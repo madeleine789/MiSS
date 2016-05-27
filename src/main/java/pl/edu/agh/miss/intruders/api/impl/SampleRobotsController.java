@@ -34,7 +34,7 @@ public class SampleRobotsController implements RobotsController {
 			List<DoorEdge> edges = node.getEdges();
 			List<Robot> robotsByTheDoor = new LinkedList<>();
 			for (DoorEdge edge : edges) {
-				if (edge.getDestination().equals(node)) {
+				if (edge.getDestination().equals(node) && !edge.getRobotsQueue().isEmpty()) {
 					robotsByTheDoor.addAll(edge.getRobotsQueue().poll());
 				}
 			}
