@@ -63,13 +63,13 @@ public class GraphView {
             if (building.isSpace(id)) {
                 node.addAttribute("ui.style", "shape : box; size: 15px, 15px;");
                 node.addAttribute("ui.style", "fill-color:  black;");
-                if (robots && n.isRobotThere()) {
-                    node.addAttribute("ui.style", "icon: url('./src/main/resources/robot.png'); icon-mode: at-left; ");
-                }
             } else if (building.isGate(id)) {
                 String color = ColorUtils.getRGBString(ColorUtils.probabilityToColor(n.getProbability()));
                 node.addAttribute("ui.style", "fill-color:  " + color + ";");
                 node.addAttribute("ui.style", "shape : diamond; size: 15px, 15px;");
+                if (robots && n.isRobotThere()) {
+                    node.addAttribute("ui.style", "icon: url('./src/main/resources/robot.png'); icon-mode: at-left; ");
+                }
             }
 
             if (nodeLabels) {

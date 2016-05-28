@@ -69,26 +69,22 @@ public class Converter {
                 if (doors.get(n.getNodeId()) != null) room.addNode(doors.get(n.getNodeId()));
             });
             node.getIncidentNodes().stream().forEach(gate -> addBidirectionalEdges(gate, node.getIncidentNodes(), doors));
-            node.getIncidentNodes().stream()
-                    .filter(n -> doors.get(n.getNodeId()) != null)
-                    .forEach(n -> doors.get(n
-                    .getNodeId())
-                    .getEdges()
-                    .stream()
-                    .forEach(e -> {
-                        Queue<List<Robot>> q = new LinkedList<>();
-                        List<Robot> l = new LinkedList<>();
-                        if (node.isRobotThere()) {
-                        	l.add(new SampleRobot());
-                        	node.isRobotThere(false);
-                        	System.out.println(node);
-                        }
-                        q.add(l);
-                        while (q.size()<e.getLength()) {
-                        	q.add(new LinkedList<>());
-                        }
-                        e.setRobotsQueue(q);
-                    }));
+            node.getIncidentNodes().stream().filter(n -> doors.get(n.getNodeId()) != null)
+                    .forEach(n -> doors.get(n.getNodeId()).getEdges().stream()
+                            .forEach(e -> {
+                                Queue<List<Robot>> q = new LinkedList<>();
+                                List<Robot> l = new LinkedList<>();
+                                if (node.isRobotThere()) {
+                                    l.add(new SampleRobot());
+                                    node.isRobotThere(false);
+                                    System.out.println(node);
+                                }
+                                q.add(l);
+                                while (q.size()<e.getLength()) {
+                                    q.add(new LinkedList<>());
+                                }
+                                e.setRobotsQueue(q);
+                            }));
             rooms.add(room);
         });
         doorNodes.addAll(doors.values());
@@ -119,6 +115,7 @@ public class Converter {
                     .forEach(n -> n.setProbability(probability));
             this.rosonBuilding.getNode(node.getName()).setProbability(probability);
 
+            HashSet<String> nodesWithRobots = new HashSet<>();
             this.rosonBuilding.getEdges().forEach( edge -> {
                 if (Objects.equals(edge.getNodeFromId(), node.getName()) ||
                         Objects.equals(edge.getNodeToId(), node.getName())) {
@@ -128,10 +125,16 @@ public class Converter {
                         rosonBuilding.getNode(node.getName()).isRobotThere(false);
                     } else {
                         edge.setHasRobot(true);
-                        rosonBuilding.getNode(node.getName()).isRobotThere(true);
+                        nodesWithRobots.addAll(Arrays.asList(node.getName()));
                     }
                 }
             });
+            nodesWithRobots.forEach((id) -> {
+                if (rosonBuilding.isGate(id)) {
+                    rosonBuilding.getNode(id).isRobotThere(true);
+                } else rosonBuilding.getNode(id).isRobotThere(false);
+            });
+            nodesWithRobots.clear();
         });
         return this.rosonBuilding;
     };
