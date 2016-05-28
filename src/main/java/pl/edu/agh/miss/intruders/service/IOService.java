@@ -28,7 +28,6 @@ public class IOService {
         Map<String, Gate> gates = new HashMap<>();
         Map<String, Space> spaces = new HashMap<>();
         List<Edge> edges = new ArrayList<>();
-        final boolean[] automaticLayout = { true };
 
         gatesNode.forEach(gateNode -> {
             Gate gate = new Gate(gateNode.get("nodeId").asText(), gateNode.get("gateId").asText());
@@ -48,7 +47,6 @@ public class IOService {
             if (nodeNode.has("position")) {
                 node.setX(nodeNode.get("position").get("x").asDouble());
                 node.setY(nodeNode.get("position").get("y").asDouble());
-                automaticLayout[0] = false;
             }
             nodes.put(node.getNodeId(), node);
         });
@@ -89,7 +87,7 @@ public class IOService {
             });
         });
 
-        return createBuilding(nodes, gates, spaces, edges, automaticLayout[0]);
+        return createBuilding(nodes, gates, spaces, edges);
     }
 
     public static void exportToJson(RosonBuilding building, File file) throws IOException {
@@ -104,10 +102,8 @@ public class IOService {
     }
 
     private static RosonBuilding createBuilding(Map<String, Node> nodes, Map<String, Gate> gates,
-                                                Map<String, Space> spaces, List<Edge> edges, boolean
-                                                   automaticLayout) {
+                                                Map<String, Space> spaces, List<Edge> edges) {
         RosonBuilding building = new RosonBuilding();
-        building.setAutomaticLayout(automaticLayout);
         nodes.forEach((nodeId, node) -> {
             if (gates.containsKey(nodeId)){
                 Gate gate = gates.get(nodeId);

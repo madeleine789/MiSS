@@ -29,6 +29,7 @@ public class Main {
 		options.addOption("v", false, "show building graph with no simulation");
 		options.addOption("s", false, "run simulation without visualization");
 		options.addOption("verbosity", true, "verbosity level (0-3)");
+		options.addOption("auto", false, "use automatic layout");
 
 		CommandLineParser parser = new DefaultParser();
 		CommandLine cmd = parser.parse( options, args);
@@ -68,6 +69,7 @@ public class Main {
 		screenshots = cmd.hasOption("screenshots");
 
 		RosonBuilding b = IOService.importFromJson(file);
+		b.setAutomaticLayout(cmd.hasOption("auto"));
 		Converter converter = new Converter(b);
 		GraphView graphView = new GraphView().withMergedEdges(edges)
 				.withNodeLabels(labels).withRobots(robots).withScreenshots(screenshots);
