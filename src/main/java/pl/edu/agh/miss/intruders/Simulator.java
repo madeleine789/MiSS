@@ -61,7 +61,7 @@ public class Simulator {
 		for (int j = 0; j < iterations; j++) {
 			for (int i = 0; i < timeUnits; i++) {
 				if (graph != null && graphView.screenshots) {
-					graphView.makeScreenShot(graph, "images/img_" + i + ".png");
+					graphView.makeScreenShot(graph, "result/images/img_" + i + ".png");
 				}
 				intruderController.update();
 				robotsController.update();
