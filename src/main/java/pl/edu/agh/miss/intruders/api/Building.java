@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface Building {
 
-    public List<Room> getRooms();
+    List<Room> getRooms();
 
-    public List<DoorNode> getDoorNodes();
+    List<DoorNode> getDoorNodes();
 
-    public List<Robot> getRobots();
+    List<Robot> getRobots();
 }

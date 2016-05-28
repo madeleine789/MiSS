@@ -4,6 +4,7 @@ public class Edge {
     private String nodeToId;
     private String nodeFromId;
     private double cost;
+    private boolean hasRobot = false;
 
     public void setNodeToId(String nodeToId) {
         this.nodeToId = nodeToId;
@@ -15,6 +16,10 @@ public class Edge {
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    public void setHasRobot(boolean hasRobot) {
+        this.hasRobot = hasRobot;
     }
 
     public String getNodeFromId() {
@@ -29,8 +34,12 @@ public class Edge {
         return cost;
     }
 
+    public boolean hasRobot() {
+        return hasRobot;
+    }
+
     @Override
     public String toString() {
-        return nodeFromId + " - " + cost + " -> " + nodeToId;
+        return nodeFromId + "->" + nodeToId;
     }
 }

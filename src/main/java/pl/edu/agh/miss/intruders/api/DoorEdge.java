@@ -1,5 +1,6 @@
 package pl.edu.agh.miss.intruders.api;
 
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -24,7 +25,7 @@ public interface DoorEdge {
 	void setDestination(DoorNode destination);
 
 	/** Edge length (in time ticks). */
-	float getLength();
+	int getLength();
 	
 	void setLength(int length);
 
@@ -39,13 +40,7 @@ public interface DoorEdge {
 	
 	void setIntrudersQueue(Queue<Float> queue);
 	
-	Queue<Robot> getRobotsQueue();
+	Queue<List<Robot>> getRobotsQueue();
 	
-	void setRobotsQueue(Queue<Robot> queue);
-
-	/** Get the probability of the intruder moving through this edge. */
-	float getProbability();
-
-	/** Set the probability of the intruder moving through this edge. */
-	void setProbability(float weight);
+	void setRobotsQueue(Queue<List<Robot>> queue);
 }

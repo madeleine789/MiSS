@@ -15,16 +15,15 @@ public class SampleDoorNode implements DoorNode {
 	
 	float probability;
 	
-	float stayProbability;
-	
-	float passThroughProbability;
-	
 	private DoorNode otherSide;
 	
 	private String name;
 	
+	private List<Robot> robotsFromTheOtherSide;
+	
 	public SampleDoorNode() {
 		edges = new LinkedList<>();
+		robotsFromTheOtherSide = new LinkedList<>();
 	}
 
 	@Override
@@ -53,8 +52,13 @@ public class SampleDoorNode implements DoorNode {
 	public Robot[] getRobots() {
 		List<Robot> robots = new LinkedList<>();
 		for (DoorEdge edge : getEdges()) {
-			robots.addAll(edge.getRobotsQueue());
+			if (edge.getSource().equals(this)) {
+				for (List<Robot> rs : edge.getRobotsQueue()) {
+					robots.addAll(rs);
+				}
+			}
 		}
+		robots.addAll(robotsFromTheOtherSide);
 		return robots.toArray(new Robot[robots.size()]);
 	}
 
@@ -63,25 +67,6 @@ public class SampleDoorNode implements DoorNode {
 		return otherSide;
 	}
 
-	@Override
-	public float getPassThroughProbability() {
-		return passThroughProbability;
-	}
-
-	@Override
-	public void setPassThroughProbability(float weight) {
-		this.passThroughProbability = weight;
-	}
-
-	@Override
-	public float getStayProbability() {
-		return stayProbability;
-	}
-
-	@Override
-	public void setStayProbability(float weight) {
-		this.stayProbability = weight;
-	}
 
 	@Override
 	public List<DoorEdge> getEdges() {
@@ -136,6 +121,16 @@ public class SampleDoorNode implements DoorNode {
 	@Override
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public List<Robot> getRobotsFromTheOtherSide() {
+		return robotsFromTheOtherSide;
+	}
+
+	@Override
+	public void setRobotsFromTheOtherSide(List<Robot> robotsFromTheOtherSide) {
+		this.robotsFromTheOtherSide = robotsFromTheOtherSide;
 	}
 
 }

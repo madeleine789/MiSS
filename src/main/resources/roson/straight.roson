@@ -576,8 +576,40 @@
       }
     }
   ],
-  "robots": [],
-  "victims": [],
+  "robots": [
+    {
+      "type": "robot",
+      "id": "Robot58",
+      "kind": "SomeType",
+      "location": {
+        "x": 2.88,
+        "y": 3.14,
+        "z": 0.2,
+        "alpha": 0.0001
+      }
+    },
+    {
+      "type": "robot",
+      "id": "Robot59",
+      "kind": "SomeType",
+      "location": {
+        "x": 1.93,
+        "y": 1.93,
+        "z": 0.2,
+        "alpha": 0.0001
+      }
+    }
+  ],
+  "victims": [
+    {
+      "type": "victim",
+      "id": "Victim57",
+      "position": {
+        "x": 1.04,
+        "y": 1.87
+      }
+    }
+  ],
   "space-walls": [
     {
       "type": "space-wall",
@@ -885,8 +917,25 @@
       "nodeId": "Node76"
     }
   ],
-  "space-robots": [],
-  "space-victims": [],
+  "space-robots": [
+    {
+      "type": "space-robot",
+      "spaceId": "Space23",
+      "robotId": "Robot59"
+    },
+    {
+      "type": "space-robot",
+      "spaceId": "Space73",
+      "robotId": "Robot58"
+    }
+  ],
+  "space-victims": [
+    {
+      "type": "space-victim",
+      "spaceId": "Space47",
+      "robotId": "Victim57"
+    }
+  ],
   "gate-nodes": [
     {
       "type": "gate-node",
@@ -944,21 +993,21 @@
       "type": "node-nodes",
       "nodeFromId": "Node24",
       "nodeToId": "Node25",
-      "cost": 0.34949999999999987,
+      "cost": 0.34950000000000014,
       "blocked": 0.0
     },
     {
       "type": "node-nodes",
       "nodeFromId": "Node24",
       "nodeToId": "Node26",
-      "cost": 0.34949999999999987,
+      "cost": 0.34949999999999959,
       "blocked": 0.0
     },
     {
       "type": "node-nodes",
       "nodeFromId": "Node25",
       "nodeToId": "Node24",
-      "cost": 0.34949999999999987,
+      "cost": 0.34950000000000014,
       "blocked": 0.0
     },
     {
@@ -972,7 +1021,7 @@
       "type": "node-nodes",
       "nodeFromId": "Node26",
       "nodeToId": "Node24",
-      "cost": 0.34949999999999987,
+      "cost": 0.34949999999999959,
       "blocked": 0.0
     },
     {
@@ -1042,7 +1091,7 @@
       "type": "node-nodes",
       "nodeFromId": "Node48",
       "nodeToId": "Node49",
-      "cost": 0.39949999999999991,
+      "cost": 0.39949999999999974,
       "blocked": 0.0
     },
     {
@@ -1056,14 +1105,14 @@
       "type": "node-nodes",
       "nodeFromId": "Node49",
       "nodeToId": "Node48",
-      "cost": 0.39949999999999991,
+      "cost": 0.39949999999999974,
       "blocked": 0.0
     },
     {
       "type": "node-nodes",
       "nodeFromId": "Node49",
       "nodeToId": "Node50",
-      "cost": 0.63960964658141284,
+      "cost": 0.63960964658141273,
       "blocked": 0.0
     },
     {
@@ -1077,7 +1126,7 @@
       "type": "node-nodes",
       "nodeFromId": "Node50",
       "nodeToId": "Node49",
-      "cost": 0.63960964658141284,
+      "cost": 0.63960964658141273,
       "blocked": 0.0
     },
     {
@@ -1098,7 +1147,7 @@
       "type": "node-nodes",
       "nodeFromId": "Node61",
       "nodeToId": "Node62",
-      "cost": 0.51428312664238418,
+      "cost": 0.51428312664238407,
       "blocked": 0.0
     },
     {
@@ -1112,7 +1161,7 @@
       "type": "node-nodes",
       "nodeFromId": "Node62",
       "nodeToId": "Node61",
-      "cost": 0.51428312664238418,
+      "cost": 0.51428312664238407,
       "blocked": 0.0
     },
     {

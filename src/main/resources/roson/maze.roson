@@ -822,42 +822,6 @@
   "nodes": [
     {
       "type": "node",
-      "id": "Node23",
-      "kind": "spaceNode",
-      "position": {
-        "x": 4.0350040959255544,
-        "y": 3.1325473747896488
-      }
-    },
-    {
-      "type": "node",
-      "id": "Node24",
-      "kind": "gateNode",
-      "position": {
-        "x": 4.0080160569286774,
-        "y": 2.9611594598186262
-      }
-    },
-    {
-      "type": "node",
-      "id": "Node32",
-      "kind": "spaceNode",
-      "position": {
-        "x": 3.9973816783289315,
-        "y": 2.6032559041073888
-      }
-    },
-    {
-      "type": "node",
-      "id": "Node33",
-      "kind": "gateNode",
-      "position": {
-        "x": 4.0124900366139169,
-        "y": 2.7602137766505077
-      }
-    },
-    {
-      "type": "node",
       "id": "Node39",
       "kind": "spaceNode",
       "position": {
@@ -1628,26 +1592,6 @@
   "space-nodes": [
     {
       "type": "space-node",
-      "spaceId": "Space22",
-      "nodeId": "Node23"
-    },
-    {
-      "type": "space-node",
-      "spaceId": "Space22",
-      "nodeId": "Node24"
-    },
-    {
-      "type": "space-node",
-      "spaceId": "Space31",
-      "nodeId": "Node32"
-    },
-    {
-      "type": "space-node",
-      "spaceId": "Space31",
-      "nodeId": "Node33"
-    },
-    {
-      "type": "space-node",
       "spaceId": "Space38",
       "nodeId": "Node39"
     },
@@ -1842,19 +1786,26 @@
       "nodeId": "Node147"
     }
   ],
-  "space-robots": [],
-  "space-victims": [],
+  "space-robots": [
+    {
+      "type": "space-robot",
+      "spaceId": "Space72",
+      "robotId": "Robot148"
+    },
+    {
+      "type": "space-robot",
+      "spaceId": "Space135",
+      "robotId": "Robot149"
+    }
+  ],
+  "space-victims": [
+  {
+    "type": "space-victim",
+    "spaceId": "Space38",
+    "robotId": "Victim1"
+  }
+  ],
   "gate-nodes": [
-    {
-      "type": "gate-node",
-      "nodeId": "Node24",
-      "gateId": "Wall17"
-    },
-    {
-      "type": "gate-node",
-      "nodeId": "Node33",
-      "gateId": "Wall17"
-    },
     {
       "type": "gate-node",
       "nodeId": "Node40",
@@ -1992,48 +1943,6 @@
     }
   ],
   "node-nodes": [
-    {
-      "type": "node-nodes",
-      "nodeFromId": "Node23",
-      "nodeToId": "Node24",
-      "cost": 0.17349977419873322,
-      "blocked": 0.0
-    },
-    {
-      "type": "node-nodes",
-      "nodeFromId": "Node24",
-      "nodeToId": "Node23",
-      "cost": 0.17349977419873322,
-      "blocked": 0.0
-    },
-    {
-      "type": "node-nodes",
-      "nodeFromId": "Node24",
-      "nodeToId": "Node33",
-      "cost": 0.2009954827306473,
-      "blocked": 0.0
-    },
-    {
-      "type": "node-nodes",
-      "nodeFromId": "Node32",
-      "nodeToId": "Node33",
-      "cost": 0.15768334167986611,
-      "blocked": 0.0
-    },
-    {
-      "type": "node-nodes",
-      "nodeFromId": "Node33",
-      "nodeToId": "Node32",
-      "cost": 0.15768334167986611,
-      "blocked": 0.0
-    },
-    {
-      "type": "node-nodes",
-      "nodeFromId": "Node33",
-      "nodeToId": "Node24",
-      "cost": 0.2009954827306473,
-      "blocked": 0.0
-    },
     {
       "type": "node-nodes",
       "nodeFromId": "Node39",
