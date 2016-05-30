@@ -1,6 +1,8 @@
 package pl.edu.agh.miss.intruders;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.graphstream.graph.Graph;
 
@@ -76,7 +78,7 @@ public class Simulator {
 			sleep();
 		}		
 		try {
-			measurer.measure("result/test.txt");
+			measurer.measure("result/test_" + new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date()) + ".txt");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
